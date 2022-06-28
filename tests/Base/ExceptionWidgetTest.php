@@ -25,7 +25,7 @@ final class ExceptionWidgetTest extends TestCase
         $widget->for(new PropertyTypeForm(), '');
     }
 
-        /**
+    /**
      * @throws ReflectionException
      */
     public function testGetAttributeNotExist(): void

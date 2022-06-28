@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Forge\Form\Tests\Input\Email;
 
 use Forge\Form\Input\Email;
-use Forge\Form\Tests\Support\PropertyTypeForm;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 

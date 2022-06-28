@@ -9,7 +9,7 @@ use Forge\Form\Tests\Support\PropertyTypeForm;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 
-final class MonthAttributesTest extends TestCase
+final class MonthTest extends TestCase
 {
     /**
      * @throws ReflectionException

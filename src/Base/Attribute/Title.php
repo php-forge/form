@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Forge\Form\Base\Attribute;
 
-use Forge\Html\Helper\CssClass;
-
 trait Title
 {
     /**

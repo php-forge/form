@@ -70,7 +70,7 @@ abstract class Widget extends AbstractWidget
 
     protected function getShortNameClass(): string
     {
-        return strrchr(get_class($this), '\\') . '::class';
+        return strrchr(static::class, '\\') . '::class';
     }
 
     /**

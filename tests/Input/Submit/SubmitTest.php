@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Forge\Form\Tests\Input\Submit;
 
 use Forge\Form\Input\Submit;
-use Forge\Form\Tests\Support\PropertyTypeForm;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 

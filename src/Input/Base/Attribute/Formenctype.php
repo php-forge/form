@@ -34,5 +34,4 @@ trait Formenctype
 
         return $new;
     }
-
 }

@@ -9,7 +9,7 @@ use Forge\Form\Tests\Support\PropertyTypeForm;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 
-final class InputAttributesTest extends TestCase
+final class InputAttibutesTest extends TestCase
 {
     /**
      * @throws ReflectionException
@@ -19,13 +19,13 @@ final class InputAttributesTest extends TestCase
         // Value string `#ff0000`.
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="color" value="#ff0000">',
-           Color::create()->for(new PropertyTypeForm(), 'string')->value('#ff0000')->render(),
+            Color::create()->for(new PropertyTypeForm(), 'string')->value('#ff0000')->render(),
         );
 
         // Value `null`.
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="color">',
-           Color::create()->for(new PropertyTypeForm(), 'string')->value(null)->render(),
+            Color::create()->for(new PropertyTypeForm(), 'string')->value(null)->render(),
         );
     }
 
@@ -40,14 +40,14 @@ final class InputAttributesTest extends TestCase
         $formModel->setValue('string', '#ff0000');
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="color" value="#ff0000">',
-           Color::create()->for($formModel, 'string')->render(),
+            Color::create()->for($formModel, 'string')->render(),
         );
 
         // Value `null`.
         $formModel->setValue('string', null);
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="color">',
-           Color::create()->for($formModel, 'string')->render(),
+            Color::create()->for($formModel, 'string')->render(),
         );
     }
 }
