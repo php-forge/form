@@ -6,7 +6,6 @@ namespace Forge\Form\Tests\Input\Datetime;
 
 use Forge\Form\Input\Datetime;
 use Forge\Form\Tests\Support\PropertyTypeForm;
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 

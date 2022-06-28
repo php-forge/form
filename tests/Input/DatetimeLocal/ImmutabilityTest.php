@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Forge\Form\Tests\Input\DatetimeLocal;
 
 use Forge\Form\Input\DateTimeLocal;
-use Forge\Form\Tests\Support\PropertyTypeForm;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 

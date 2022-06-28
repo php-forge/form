@@ -12,7 +12,6 @@ use ReflectionException;
 
 final class ExceptionTest extends TestCase
 {
-
     /**
      * @throws ReflectionException
      */

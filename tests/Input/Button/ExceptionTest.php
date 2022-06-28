@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Forge\Form\Tests\Input\Button;
 
 use Forge\Form\Input\button;
-use Forge\Form\Tests\Support\PropertyTypeForm;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;

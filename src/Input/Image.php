@@ -48,7 +48,7 @@ final class Image extends Base\Input
     /**
      * Returns a new instances specifying the height of the image, in CSS pixels.
      *
-     * @param int|float|string $value The height of the image.
+     * @param float|int|string $value The height of the image.
      *
      * @return self
      *
@@ -82,7 +82,7 @@ final class Image extends Base\Input
     /**
      * Returns a new instances specifying the width of the image, in CSS pixels.
      *
-     * @param int|float|string $value Te width of the image.
+     * @param float|int|string $value Te width of the image.
      *
      * @return self
      *

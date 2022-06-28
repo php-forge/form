@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Forge\Form\Tests\Input\Image;
 
 use Forge\Form\Input\Image;
-use Forge\Form\Tests\Support\PropertyTypeForm;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 

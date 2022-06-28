@@ -51,6 +51,6 @@ final class Submit extends AbstractWidget
 
     private function getShortNameClass(): string
     {
-        return strrchr(get_class($this), '\\') . '::class';
+        return strrchr(self::class, '\\') . '::class';
     }
 }

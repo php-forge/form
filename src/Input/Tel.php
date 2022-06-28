@@ -39,7 +39,7 @@ final class Tel extends Base\Input
          */
         if (!is_string($value) && !is_int($value) && null !== $value) {
             throw new InvalidArgumentException(
-                $this->getShortNameClass() .  ' widget must be a string, numeric or null.'
+                $this->getShortNameClass() . ' widget must be a string, numeric or null.'
             );
         }
 

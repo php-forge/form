@@ -7,7 +7,6 @@ namespace Forge\Form\Input;
 use Forge\Form\Base\Widget;
 use InvalidArgumentException;
 
-use function is_string;
 use function ucfirst;
 
 /**

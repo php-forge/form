@@ -6,7 +6,6 @@ namespace Forge\Form\Input\Base;
 
 use Forge\Form\Base\Widget;
 use Forge\Html\Tag\Tag;
-use InvalidArgumentException;
 
 /**
  * The input element with a type attribute whose value is "checkbox" represents a state or option that can be toggled.

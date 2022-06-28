@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Forge\Form\Tests\Input\Base;
 
-use Forge\Form\Base\Globals;
 use Forge\Form\Base\Widget;
 use Forge\Form\Tests\Support\PropertyTypeForm;
 use Forge\Html\Tag\Tag;

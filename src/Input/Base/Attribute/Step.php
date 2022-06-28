@@ -11,7 +11,7 @@ trait Step
     /**
      * Returns a new instances specifying the value granularity of the element’s value.
      *
-     * @param int|float|string $value The value granularity of the element’s value.
+     * @param float|int|string $value The value granularity of the element’s value.
      *
      * @return static
      */
