@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Forge\Form\Tests\Input\DateTime;
 
-use Forge\Form\Input\DateTime;
+use Forge\Form\Input\Datetime;
 use Forge\Form\Tests\Support\PropertyTypeForm;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
