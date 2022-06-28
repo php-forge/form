@@ -34,7 +34,7 @@ final class Checkbox extends Base\Input
      * Returns a new instance with hidden widget that corresponds to "unchecked" state of the input.
      *
      * @param string $value The value of the "unchecked" state.
-     * @param string $values The Attribute values indexed by attribute names for hidden widget.
+     * @param array $values The Attribute values indexed by attribute names for hidden widget.
      *
      * @return self
      */
@@ -74,9 +74,10 @@ final class Checkbox extends Base\Input
             true => $this->checked,
             default => "$value" === "$valueDefault",
         };
+        /** @var mixed */
         $attributes['value'] = is_bool($valueDefault) ? (int) $valueDefault : $valueDefault;
         $label = $this->label === '' ? ' ' . ucfirst($this->getAttribute()) : $this->label;
-        $radioTag = $this->input('checkbox', $attributes) . $label;
+        $radioTag = $this->input('checkbox', $attributes) . (string) $label;
 
         return match ($this->hidden) {
             null => $radioTag,

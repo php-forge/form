@@ -30,7 +30,7 @@ final class File extends Base\Input
      * Returns a new instance with hidden widget that corresponds to "unchecked" state of the input.
      *
      * @param string $value The value of the "unchecked" state.
-     * @param string $values The Attribute values indexed by attribute names for hidden widget.
+     * @param array $values The Attribute values indexed by attribute names for hidden widget.
      *
      * @return self
      */
@@ -52,7 +52,7 @@ final class File extends Base\Input
         $attributes = $this->attributes;
         $name = $this->getInputName();
 
-        if (array_key_exists('name', $attributes)) {
+        if (array_key_exists('name', $attributes) && is_string($attributes['name'])) {
             $name = $attributes['name'];
         }
 
@@ -63,7 +63,7 @@ final class File extends Base\Input
             $attributes['id'] = $this->getInputId();
         }
 
-        $attributes['name'] = null !== $name ? Utils::generateArrayableName($name) : null;
+        $attributes['name'] = '' !== $name ? Utils::generateArrayableName($name) : null;
         $attributes['type'] = 'file';
 
         return match ($this->hidden) {

@@ -6,9 +6,9 @@ namespace Forge\Form\Base;
 
 use Forge\Form\Exception\AttributeNotSet;
 use Forge\Form\Exception\FormModelNotSet;
+use Forge\Model\Attribute\FormModelAttributes;
+use Forge\Model\Contract\FormModelContract;
 use Forge\Widget\AbstractWidget;
-use Yii\Extension\Model\Attribute\FormModelAttributes;
-use Yii\Extension\Model\Contract\FormModelContract;
 
 abstract class Widget extends AbstractWidget
 {
