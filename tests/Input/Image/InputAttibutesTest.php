@@ -9,7 +9,7 @@ use Forge\Form\Tests\Support\PropertyTypeForm;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 
-final class InputAttributesTest extends TestCase
+final class InputAttibutesTest extends TestCase
 {
     /**
      * @throws ReflectionException

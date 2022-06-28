@@ -38,7 +38,7 @@ final class Search extends Base\Input
          * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.search.html#input.search.attrs.value
          */
         if (null !== $value && !is_string($value)) {
-            throw new InvalidArgumentException($this->getShortNameClass() .  ' widget must be a string or null value.');
+            throw new InvalidArgumentException($this->getShortNameClass() . ' widget must be a string or null value.');
         }
 
         $attributes['value'] = $value;
