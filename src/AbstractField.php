@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Forge\Form;
 
+use Forge\Html\Helper\CssClass;
 use Forge\Model\Attribute\FormModelAttributes;
 use Forge\Model\Contract\FormModelContract;
 use Forge\Widget\AbstractWidget;
+use ReflectionException;
 
 abstract class AbstractField extends AbstractWidget
 {
@@ -30,7 +32,7 @@ abstract class AbstractField extends AbstractWidget
     public function label(string $value = null): static
     {
         $new = clone $this;
-        $new->label = $label;
+        $new->label = $value;
 
         return $new;
     }
@@ -44,7 +46,7 @@ abstract class AbstractField extends AbstractWidget
     public function labelAttributes(array $values): static
     {
         $new = clone $this;
-        $new->labelAttributes = $attributes;
+        $new->labelAttributes = $values;
 
         return $new;
     }
@@ -56,10 +58,10 @@ abstract class AbstractField extends AbstractWidget
      *
      * @return static
      */
-    public function labelClass(string $class): static
+    public function labelClass(string $value): static
     {
         $new = clone $this;
-        $new->labelClass = $class;
+        $new->labelClass = $value;
 
         return $new;
     }
@@ -73,12 +75,11 @@ abstract class AbstractField extends AbstractWidget
         $labelClass = $this->labelClass;
 
         if (!array_key_exists('for', $labelAttributes)) {
-            /** @var string */
             $labelAttributes['for'] = FormModelAttributes::getInputId($this->formModel, $this->fieldAttribute);
         }
 
         if ($labelClass !== '') {
-            Html::addCssClass($labelAttributes, $labelClass);
+            CssClass::add($labelAttributes, $labelClass);
         }
 
         return Base\Field\Label::create(construct: [$this->formModel, $this->fieldAttribute])

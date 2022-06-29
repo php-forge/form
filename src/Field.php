@@ -82,28 +82,6 @@ final class Field extends AbstractField
     /**
      * @throws ReflectionException
      */
-    private function renderError(): string
-    {
-        $errorAttributes = $this->getErrorAttributes();
-        $errorClass = $this->getErrorClass();
-
-        if ($errorClass !== '') {
-            Html::addCssClass($errorAttributes, $errorClass);
-        }
-
-        return Error::create()
-            ->attributes($errorAttributes)
-            ->encode($this->getEncode())
-            ->for($this->inputWidget->getFormModel(), $this->inputWidget->getAttribute())
-            ->message($this->getError() ?? '')
-            ->messageCallback($this->getErrorMessageCallback())
-            ->tag($this->getErrorTag())
-            ->render();
-    }
-
-    /**
-     * @throws ReflectionException
-     */
     private function renderInputWidget(): string
     {
         $parts = $this->parts;
@@ -129,30 +107,5 @@ final class Field extends AbstractField
         //}
 
         return preg_replace('/^\h*\v+/m', '', trim(strtr($this->template, $parts)));
-    }
-
-    /**
-     * @throws ReflectionException
-     */
-    private function renderHint(): string
-    {
-        $hintAttributes = $this->getHintAttributes();
-        $hintClass = $this->getHintClass();
-
-        if ($hintClass !== '') {
-            Html::addCssClass($hintAttributes, $hintClass);
-        }
-
-        if ($this->getAriaDescribedBy() === true) {
-            $hintAttributes['id'] = $this->inputWidget->getInputId() . '-help';
-        }
-
-        return Hint::create()
-            ->attributes($hintAttributes)
-            ->encode($this->getEncode())
-            ->for($this->inputWidget->getFormModel(), $this->inputWidget->getAttribute())
-            ->hint($this->getHint())
-            ->tag($this->getHintTag())
-            ->render();
     }
 }
