@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Forge\Form\Base;
 
 use Forge\Form\Exception\AttributeNotSet;
-use Forge\Form\Exception\FormModelNotSet;
 use Forge\Model\Attribute\FormModelAttributes;
 use Forge\Model\Contract\FormModelContract;
 use Forge\Widget\AbstractWidget;
