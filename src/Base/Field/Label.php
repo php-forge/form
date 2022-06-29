@@ -45,7 +45,7 @@ final class Label extends Widget
     /**
      * Returns a new instance specifying the label to be displayed.
      *
-     * @param null|string $value The label to be displayed.
+     * @param string|null $value The label to be displayed.
      * @param bool $encode Whether to encode the label.
      *
      * @return static

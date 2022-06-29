@@ -6,7 +6,6 @@ namespace Forge\Form;
 
 use Forge\Html\Tag\Tag;
 use ReflectionException;
-use Yiisoft\Arrays\ArrayHelper;
 
 use function array_key_exists;
 use function array_merge;
