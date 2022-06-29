@@ -6,8 +6,8 @@ namespace Forge\Form\Tests\Widget;
 
 use Forge\Form\Base\Widget;
 use Forge\Form\Exception\AttributeNotSet;
-use Forge\Form\Exception\FormModelNotSet;
 use Forge\Form\Tests\Support\PropertyTypeForm;
+use Forge\Model\Contract\FormModelContract;
 use Forge\TestUtils\Assert;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
@@ -19,10 +19,9 @@ final class ExceptionWidgetTest extends TestCase
      */
     public function testGetAttributeNotSet(): void
     {
-        $widget = $this->widget();
         $this->expectException(AttributeNotSet::class);
         $this->expectExceptionMessage('Failed to create widget because "attribute" is not set or not exists.');
-        $widget->for(new PropertyTypeForm(), '');
+        $widget = $this->widget(new PropertyTypeForm(), '');
     }
 
     /**
@@ -30,27 +29,14 @@ final class ExceptionWidgetTest extends TestCase
      */
     public function testGetAttributeNotExist(): void
     {
-        $widget = $this->widget();
         $this->expectException(AttributeNotSet::class);
         $this->expectExceptionMessage('Failed to create widget because "attribute" is not set or not exists.');
-        $widget->for(new PropertyTypeForm(), 'noExist');
+        $widget = $this->widget(new PropertyTypeForm(), 'noExist');
     }
 
-    /**
-     * @throws ReflectionException
-     */
-    public function testGetFormModelNotSet(): void
+    private function widget(FormModelContract $formModel, string $fieldAttributes): Widget
     {
-        $assert = new Assert();
-        $widget = $this->widget();
-        $this->expectException(FormModelNotSet::class);
-        $this->expectExceptionMessage('Failed to create widget because form model is not set.');
-        $assert ->invokeMethod($widget, 'getFormModel');
-    }
-
-    private function widget(): Widget
-    {
-        return new class () extends Widget {
+        return new class ($formModel, $fieldAttributes) extends Widget {
             protected function run(): string
             {
                 return '';

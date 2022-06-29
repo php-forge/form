@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Forge\Form\Tests\Input\Base;
 
 use Forge\Form\Input\Base\Input;
+use Forge\Form\Tests\Support\PropertyTypeForm;
+use Forge\Model\Contract\FormModelContract;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 
@@ -15,7 +17,7 @@ final class ImmutabilityTest extends TestCase
      */
     public function testImmutability(): void
     {
-        $input = $this->text();
+        $input = $this->text(new PropertyTypeForm(), 'string');
         $this->assertNotSame($input, $input->ariaDescribedBy(''));
         $this->assertNotSame($input, $input->ariaLabel(''));
         $this->assertNotSame($input, $input->autocomplete('off'));
@@ -27,9 +29,9 @@ final class ImmutabilityTest extends TestCase
         $this->assertNotSame($input, $input->value(''));
     }
 
-    private function text(): Input
+    private function text(FormModelContract $formModel, string $fieldAttributes): Input
     {
-        return new class () extends Input {
+        return new class ($formModel, $fieldAttributes) extends Input {
             protected function run(): string
             {
                 return $this->text('input', $this->attributes);

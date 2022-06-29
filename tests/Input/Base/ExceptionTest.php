@@ -6,6 +6,7 @@ namespace Forge\Form\Tests\Input\Base;
 
 use Forge\Form\Input\Base\Input;
 use Forge\Form\Tests\Support\PropertyTypeForm;
+use Forge\Model\Contract\FormModelContract;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
@@ -19,7 +20,7 @@ final class ExceptionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Autocomplete must be "on" or "off".');
-        $this->text()->for(new PropertyTypeForm(), 'string')->autocomplete('')->render();
+        $this->text(new PropertyTypeForm(), 'string')->autocomplete('')->render();
     }
 
     /**
@@ -29,7 +30,7 @@ final class ExceptionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The value cannot be empty.');
-        $this->text()->for(new PropertyTypeForm(), 'string')->list('')->render();
+        $this->text(new PropertyTypeForm(), 'string')->list('')->render();
     }
 
     /**
@@ -39,12 +40,12 @@ final class ExceptionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The value must be a number.');
-        $this->text()->for(new PropertyTypeForm(), 'string')->step('x')->render();
+        $this->text(new PropertyTypeForm(), 'string')->step('x')->render();
     }
 
-    private function text(): Input
+    private function text(FormModelContract $formModel, string $fieldAttributes): Input
     {
-        return new class () extends Input {
+        return new class ($formModel, $fieldAttributes) extends Input {
             use \Forge\Form\Input\Base\Attribute\Step;
 
             protected function run(): string

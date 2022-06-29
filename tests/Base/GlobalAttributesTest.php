@@ -7,6 +7,7 @@ namespace Forge\Form\Tests\Input\Base;
 use Forge\Form\Base\Widget;
 use Forge\Form\Tests\Support\PropertyTypeForm;
 use Forge\Html\Tag\Tag;
+use Forge\Model\Contract\FormModelContract;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 
@@ -19,7 +20,7 @@ final class GlobalAttributesTest extends TestCase
     {
         $this->assertSame(
             '<text autofocus>',
-            $this->widget()->autofocus()->for(new PropertyTypeForm(), 'string')->render(),
+            $this->widget(new PropertyTypeForm(), 'string')->autofocus()->render(),
         );
     }
 
@@ -30,7 +31,7 @@ final class GlobalAttributesTest extends TestCase
     {
         $this->assertSame(
             '<text class="class">',
-            $this->widget()->class('class')->for(new PropertyTypeForm(), 'string')->render(),
+            $this->widget(new PropertyTypeForm(), 'string')->class('class')->render(),
         );
     }
 
@@ -41,7 +42,7 @@ final class GlobalAttributesTest extends TestCase
     {
         $this->assertSame(
             '<text id="test.id">',
-            $this->widget()->for(new PropertyTypeForm(), 'string')->id('test.id')->render(),
+            $this->widget(new PropertyTypeForm(), 'string')->id('test.id')->render(),
         );
     }
 
@@ -52,7 +53,7 @@ final class GlobalAttributesTest extends TestCase
     {
         $this->assertSame(
             '<text name="test.name">',
-            $this->widget()->for(new PropertyTypeForm(), 'string')->name('test.name')->render(),
+            $this->widget(new PropertyTypeForm(), 'string')->name('test.name')->render(),
         );
     }
 
@@ -63,7 +64,7 @@ final class GlobalAttributesTest extends TestCase
     {
         $this->assertSame(
             '<text tabindex="1">',
-            $this->widget()->for(new PropertyTypeForm(), 'string')->tabIndex(1)->render(),
+            $this->widget(new PropertyTypeForm(), 'string')->tabIndex(1)->render(),
         );
     }
 
@@ -74,7 +75,7 @@ final class GlobalAttributesTest extends TestCase
     {
         $this->assertSame(
             '<text title="test.title">',
-            $this->widget()->for(new PropertyTypeForm(), 'string')->title('test.title')->render(),
+            $this->widget(new PropertyTypeForm(), 'string')->title('test.title')->render(),
         );
     }
 
@@ -83,7 +84,7 @@ final class GlobalAttributesTest extends TestCase
      */
     public function testWithoutId(): void
     {
-        $this->assertSame('<text>', $this->widget()->for(new PropertyTypeForm(), 'string')->id(null)->render());
+        $this->assertSame('<text>', $this->widget(new PropertyTypeForm(), 'string')->id(null)->render());
     }
 
     /**
@@ -91,12 +92,12 @@ final class GlobalAttributesTest extends TestCase
      */
     public function testWithoutName(): void
     {
-        $this->assertSame('<text>', $this->widget()->for(new PropertyTypeForm(), 'string')->name(null)->render());
+        $this->assertSame('<text>', $this->widget(new PropertyTypeForm(), 'string')->name(null)->render());
     }
 
-    private function widget(): Widget
+    private function widget(FormModelContract $formModel, string $fieldAttributes): Widget
     {
-        return new class () extends Widget {
+        return new class ($formModel, $fieldAttributes) extends Widget {
             protected function run(): string
             {
                 return Tag::begin('text', $this->attributes);

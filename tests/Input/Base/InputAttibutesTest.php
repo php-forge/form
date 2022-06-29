@@ -6,6 +6,7 @@ namespace Forge\Form\Tests\Input\Base;
 
 use Forge\Form\Input\Base\Input;
 use Forge\Form\Tests\Support\PropertyTypeForm;
+use Forge\Model\Contract\FormModelContract;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 
@@ -18,7 +19,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="text" aria-describedby="aria-describedby">',
-            $this->text()->for(new PropertyTypeForm(), 'string')->ariaDescribedBy('aria-describedby')->render(),
+            $this->text(new PropertyTypeForm(), 'string')->ariaDescribedBy('aria-describedby')->render(),
         );
     }
 
@@ -29,7 +30,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="text" aria-label="aria-label">',
-            $this->text()->for(new PropertyTypeForm(), 'string')->ariaLabel('aria-label')->render(),
+            $this->text(new PropertyTypeForm(), 'string')->ariaLabel('aria-label')->render(),
         );
     }
 
@@ -40,7 +41,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="text" autocomplete="on">',
-            $this->text()->for(new PropertyTypeForm(), 'string')->autocomplete('on')->render(),
+            $this->text(new PropertyTypeForm(), 'string')->autocomplete('on')->render(),
         );
     }
 
@@ -51,7 +52,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="text" disabled>',
-            $this->text()->for(new PropertyTypeForm(), 'string')->disabled()->render(),
+            $this->text(new PropertyTypeForm(), 'string')->disabled()->render(),
         );
     }
 
@@ -62,7 +63,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="text" form="form">',
-            $this->text()->for(new PropertyTypeForm(), 'string')->form('form')->render(),
+            $this->text(new PropertyTypeForm(), 'string')->form('form')->render(),
         );
     }
 
@@ -73,7 +74,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="text" list="test.list">',
-            $this->text()->for(new PropertyTypeForm(), 'string')->list('test.list')->render(),
+            $this->text(new PropertyTypeForm(), 'string')->list('test.list')->render(),
         );
     }
 
@@ -84,7 +85,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="text" readonly>',
-            $this->text()->for(new PropertyTypeForm(), 'string')->readonly()->render(),
+            $this->text(new PropertyTypeForm(), 'string')->readonly()->render(),
         );
     }
 
@@ -95,7 +96,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="text" required>',
-            $this->text()->for(new PropertyTypeForm(), 'string')->required()->render(),
+            $this->text(new PropertyTypeForm(), 'string')->required()->render(),
         );
     }
 
@@ -107,19 +108,19 @@ final class InputAttibutesTest extends TestCase
         // Value string `test.string`.
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="text" value="test.string">',
-            $this->text()->for(new PropertyTypeForm(), 'string')->value('test.string')->render(),
+            $this->text(new PropertyTypeForm(), 'string')->value('test.string')->render(),
         );
 
         // Value `null`.
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="text">',
-            $this->text()->for(new PropertyTypeForm(), 'string')->value(null)->render(),
+            $this->text(new PropertyTypeForm(), 'string')->value(null)->render(),
         );
     }
 
-    private function text(): Input
+    private function text(FormModelContract $formModel, string $fieldAttributes): Input
     {
-        return new class () extends Input {
+        return new class ($formModel, $fieldAttributes) extends Input {
             protected function run(): string
             {
                 return $this->input('text', $this->attributes);
