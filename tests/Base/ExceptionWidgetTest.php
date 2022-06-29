@@ -8,7 +8,6 @@ use Forge\Form\Base\Widget;
 use Forge\Form\Exception\AttributeNotSet;
 use Forge\Form\Tests\Support\PropertyTypeForm;
 use Forge\Model\Contract\FormModelContract;
-use Forge\TestUtils\Assert;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 
