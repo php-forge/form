@@ -18,7 +18,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="week" max="10">',
-            Week::create()->for(new PropertyTypeForm(), 'string')->max(10)->render(),
+            Week::create(construct: [new PropertyTypeForm(), 'string'])->max(10)->render(),
         );
     }
 
@@ -29,7 +29,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="week" min="4">',
-            Week::create()->for(new PropertyTypeForm(), 'string')->min(4)->render(),
+            Week::create(construct: [new PropertyTypeForm(), 'string'])->min(4)->render(),
         );
     }
 
@@ -40,7 +40,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="week" step="1">',
-            Week::create()->for(new PropertyTypeForm(), 'string')->step(1)->render(),
+            Week::create(construct: [new PropertyTypeForm(), 'string'])->step(1)->render(),
         );
     }
 
@@ -52,13 +52,13 @@ final class InputAttibutesTest extends TestCase
         // Value string `1996-W16`.
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="week" value="1996-W16">',
-            Week::create()->for(new PropertyTypeForm(), 'string')->value('1996-W16')->render(),
+            Week::create(construct: [new PropertyTypeForm(), 'string'])->value('1996-W16')->render(),
         );
 
         // Value `null`.
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="week">',
-            Week::create()->for(new PropertyTypeForm(), 'string')->value(null)->render(),
+            Week::create(construct: [new PropertyTypeForm(), 'string'])->value(null)->render(),
         );
     }
 
@@ -71,16 +71,18 @@ final class InputAttibutesTest extends TestCase
 
         // Value string `1996-W16`.
         $formModel->setValue('string', '1996-W16');
+
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="week" value="1996-W16">',
-            Week::create()->for($formModel, 'string')->render(),
+            Week::create(construct: [$formModel, 'string'])->render(),
         );
 
         // Value `null`.
         $formModel->setValue('string', null);
+
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="week">',
-            Week::create()->for($formModel, 'string')->render(),
+            Week::create(construct: [$formModel, 'string'])->render(),
         );
     }
 }

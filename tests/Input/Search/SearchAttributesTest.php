@@ -18,7 +18,7 @@ final class SearchAttributesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="search">',
-            Search::create()->for(new PropertyTypeForm(), 'string')->render(),
+            Search::create(construct: [new PropertyTypeForm(), 'string'])->render(),
         );
     }
 }

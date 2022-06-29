@@ -14,9 +14,14 @@ abstract class Widget extends AbstractWidget
 {
     use Globals;
 
-    private string $attribute = '';
     private string $charset = 'UTF-8';
-    private ?FormModelContract $formModel = null;
+
+    public function __construct(private FormModelContract $formModel, private string $attribute)
+    {
+        if ($this->formModel->has($this->attribute) === false) {
+            throw new AttributeNotSet();
+        }
+    }
 
     public function charset(string $value): self
     {
@@ -26,19 +31,7 @@ abstract class Widget extends AbstractWidget
         return $new;
     }
 
-    public function for(FormModelContract $formModel, string $attribute): static
-    {
-        $new = clone $this;
-        $new->formModel = $formModel;
-        $new->attribute = match ($new->getFormModel()->has($attribute)) {
-            true => $attribute,
-            false => throw new AttributeNotSet(),
-        };
-
-        return $new;
-    }
-
-    protected function getInputId(): string
+    public function getInputId(): string
     {
         return FormModelAttributes::getInputId($this->getFormModel(), $this->getAttribute(), $this->charset);
     }
@@ -108,10 +101,7 @@ abstract class Widget extends AbstractWidget
 
     protected function getFormModel(): FormModelContract
     {
-        return match ($this->formModel === null) {
-            true => throw new FormModelNotSet(),
-            false => $this->formModel,
-        };
+        return $this->formModel;
     }
 
     /**

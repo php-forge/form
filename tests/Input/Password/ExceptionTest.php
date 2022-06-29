@@ -19,6 +19,6 @@ final class ExceptionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Password::class widget must be a string or null value.');
-        Password::create()->for(new PropertyTypeForm(), 'array')->render();
+        Password::create(construct: [new PropertyTypeForm(), 'array'])->render();
     }
 }

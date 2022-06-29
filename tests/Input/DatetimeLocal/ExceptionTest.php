@@ -19,6 +19,6 @@ final class ExceptionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('DatetimeLocal::class widget must be a string or null value.');
-        DatetimeLocal::create()->for(new PropertyTypeForm(), 'array')->render();
+        DatetimeLocal::create(construct: [new PropertyTypeForm(), 'array'])->render();
     }
 }

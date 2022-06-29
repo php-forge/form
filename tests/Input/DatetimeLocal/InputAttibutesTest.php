@@ -18,7 +18,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="datetime-local" max="1996-12-19T16:39:57">',
-            DatetimeLocal::create()->for(new PropertyTypeForm(), 'string')->max('1996-12-19T16:39:57')->render(),
+            DatetimeLocal::create(construct: [new PropertyTypeForm(), 'string'])->max('1996-12-19T16:39:57')->render(),
         );
     }
 
@@ -29,7 +29,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="datetime-local" min="1996-12-19T16:39:57">',
-            DatetimeLocal::create()->for(new PropertyTypeForm(), 'string')->min('1996-12-19T16:39:57')->render(),
+            DatetimeLocal::create(construct: [new PropertyTypeForm(), 'string'])->min('1996-12-19T16:39:57')->render(),
         );
     }
 
@@ -40,7 +40,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="datetime-local" step="20">',
-            DatetimeLocal::create()->for(new PropertyTypeForm(), 'string')->step(20)->render(),
+            DatetimeLocal::create(construct: [new PropertyTypeForm(), 'string'])->step(20)->render(),
         );
     }
 
@@ -52,13 +52,15 @@ final class InputAttibutesTest extends TestCase
         // Value string `1996-12-19T16:39:57`.
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="datetime-local" value="1996-12-19T16:39:57">',
-            DatetimeLocal::create()->for(new PropertyTypeForm(), 'string')->value('1996-12-19T16:39:57')->render(),
+            DatetimeLocal::create(construct: [new PropertyTypeForm(), 'string'])
+                ->value('1996-12-19T16:39:57')
+                ->render(),
         );
 
         // Value `null`.
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="datetime-local">',
-            DatetimeLocal::create()->for(new PropertyTypeForm(), 'string')->value(null)->render(),
+            DatetimeLocal::create(construct: [new PropertyTypeForm(), 'string'])->value(null)->render(),
         );
     }
 
@@ -71,16 +73,18 @@ final class InputAttibutesTest extends TestCase
 
         // Value string `1996-12-19T16:39:57`.
         $formModel->setValue('string', '1996-12-19T16:39:57');
+
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="datetime-local" value="1996-12-19T16:39:57">',
-            DatetimeLocal::create()->for($formModel, 'string')->render(),
+            DatetimeLocal::create(construct: [$formModel, 'string'])->render(),
         );
 
         // Value `null`.
         $formModel->setValue('string', null);
+
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="datetime-local">',
-            DatetimeLocal::create()->for($formModel, 'string')->render(),
+            DatetimeLocal::create(construct: [$formModel, 'string'])->render(),
         );
     }
 }

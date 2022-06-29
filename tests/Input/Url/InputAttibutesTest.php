@@ -18,7 +18,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="url" maxlength="10">',
-            Url::create()->for(new PropertyTypeForm(), 'string')->maxlength(10)->render(),
+            Url::create(construct: [new PropertyTypeForm(), 'string'])->maxlength(10)->render(),
         );
     }
 
@@ -29,7 +29,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="url" minlength="4">',
-            Url::create()->for(new PropertyTypeForm(), 'string')->minlength(4)->render(),
+            Url::create(construct: [new PropertyTypeForm(), 'string'])->minlength(4)->render(),
         );
     }
 
@@ -41,8 +41,7 @@ final class InputAttibutesTest extends TestCase
         $expected = <<<'HTML'
         <input id="propertytypeform-string" name="PropertyTypeForm[string]" type="url" title="Only accepts uppercase and lowercase letters." pattern="[A-Za-z]">
         HTML;
-        $html = Url::create()
-            ->for(new PropertyTypeForm(), 'string')
+        $html = Url::create(construct: [new PropertyTypeForm(), 'string'])
             ->pattern('[A-Za-z]')
             ->title('Only accepts uppercase and lowercase letters.')
             ->render();
@@ -56,7 +55,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="url" placeholder="test.placeholder">',
-            Url::create()->for(new PropertyTypeForm(), 'string')->placeholder('test.placeholder')->render(),
+            Url::create(construct: [new PropertyTypeForm(), 'string'])->placeholder('test.placeholder')->render(),
         );
     }
 
@@ -67,7 +66,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="url" size="10">',
-            Url::create()->for(new PropertyTypeForm(), 'string')->size(10)->render(),
+            Url::create(construct: [new PropertyTypeForm(), 'string'])->size(10)->render(),
         );
     }
 
@@ -79,13 +78,13 @@ final class InputAttibutesTest extends TestCase
         // Value string `https:://example.com`.
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="url" value="https:://example.com">',
-            Url::create()->for(new PropertyTypeForm(), 'string')->value('https:://example.com')->render(),
+            Url::create(construct: [new PropertyTypeForm(), 'string'])->value('https:://example.com')->render(),
         );
 
         // Value `null`.
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="url">',
-            Url::create()->for(new PropertyTypeForm(), 'string')->value(null)->render(),
+            Url::create(construct: [new PropertyTypeForm(), 'string'])->value(null)->render(),
         );
     }
 
@@ -100,14 +99,14 @@ final class InputAttibutesTest extends TestCase
         $formModel->setValue('string', 'https:://example.com');
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="url" value="https:://example.com">',
-            Url::create()->for($formModel, 'string')->render(),
+            Url::create(construct: [$formModel, 'string'])->render(),
         );
 
         // Value `null`.
         $formModel->setValue('string', null);
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="url">',
-            Url::create()->for($formModel, 'string')->render(),
+            Url::create(construct: [$formModel, 'string'])->render(),
         );
     }
 }

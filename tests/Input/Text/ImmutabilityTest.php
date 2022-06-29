@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Forge\Form\Tests\Input\Text;
 
 use Forge\Form\Input\Text;
+use Forge\Form\Tests\Support\PropertyTypeForm;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 
@@ -15,7 +16,7 @@ final class ImmutabilityTest extends TestCase
      */
     public function testImmutability(): void
     {
-        $text = Text::create();
+        $text = Text::create(construct: [new PropertyTypeForm(), 'string']);
         $this->assertNotSame($text, $text->dirname('test.dir'));
         $this->assertNotSame($text, $text->maxlength(0));
         $this->assertNotSame($text, $text->minlength(0));

@@ -43,7 +43,7 @@ final class Radio extends Base\Input
         $values['value'] = $value;
 
         $new = clone $this;
-        $new->hidden = Hidden::create()->attributes($values)->for($this->getFormModel(), $this->getAttribute());
+        $new->hidden = Hidden::create(construct: [$this->getFormModel(), $this->getAttribute()])->attributes($values);
 
         return $new;
     }
@@ -74,8 +74,10 @@ final class Radio extends Base\Input
             true => $this->checked,
             default => "$value" === "$valueDefault",
         };
+
         /** @var mixed */
         $attributes['value'] = is_bool($valueDefault) ? (int) $valueDefault : $valueDefault;
+
         $label = $this->label === '' ? ' ' . ucfirst($this->getAttribute()) : $this->label;
         $radioTag = $this->input('radio', $attributes) . (string) $label;
 

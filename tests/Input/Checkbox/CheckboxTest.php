@@ -20,13 +20,13 @@ final class CheckboxTest extends TestCase
         // default value is `false`.
         $this->assertSame(
             '<input id="propertytypeform-int" name="PropertyTypeForm[int]" type="checkbox" value="1"> Int',
-            Checkbox::create()->for(new PropertyTypeForm(), 'int')->value(1)->render(),
+            Checkbox::create(construct: [new PropertyTypeForm(), 'int'])->value(1)->render(),
         );
 
         // checked value is `true`.
         $this->assertSame(
             '<input id="propertytypeform-int" name="PropertyTypeForm[int]" type="checkbox" value="1" checked> Int',
-            Checkbox::create()->checked(true)->for(new PropertyTypeForm(), 'int')->value(1)->render(),
+            Checkbox::create(construct: [new PropertyTypeForm(), 'int'])->checked(true)->value(1)->render(),
         );
     }
 
@@ -42,7 +42,7 @@ final class CheckboxTest extends TestCase
             <input name="PropertyTypeForm[int]" type="hidden" value="0">
             <input id="propertytypeform-int" name="PropertyTypeForm[int]" type="checkbox" value="1"> Int
             HTML,
-            Checkbox::create()->for(new PropertyTypeForm(), 'int')->hidden('0')->value(1)->render(),
+            Checkbox::create(construct: [new PropertyTypeForm(), 'int'])->hidden('0')->value(1)->render(),
         );
     }
 
@@ -53,7 +53,7 @@ final class CheckboxTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-bool" name="PropertyTypeForm[bool]" type="checkbox"> Bool',
-            Checkbox::create()->for(new PropertyTypeForm(), 'bool')->render(),
+            Checkbox::create(construct: [new PropertyTypeForm(), 'bool'])->render(),
         );
     }
 
@@ -64,7 +64,7 @@ final class CheckboxTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-bool" name="PropertyTypeForm[bool]" type="checkbox">',
-            Checkbox::create()->for(new PropertyTypeForm(), 'bool')->label(null)->render(),
+            Checkbox::create(construct: [new PropertyTypeForm(), 'bool'])->label(null)->render(),
         );
     }
 }

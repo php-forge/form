@@ -18,7 +18,7 @@ final class NumberTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="number">',
-            Number::create()->for(new PropertyTypeForm(), 'string')->render(),
+            Number::create(construct: [new PropertyTypeForm(), 'string'])->render(),
         );
     }
 }

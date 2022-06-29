@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Forge\Form\Tests\Input\Month;
 
 use Forge\Form\Input\Month;
+use Forge\Form\Tests\Support\PropertyTypeForm;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 
@@ -15,7 +16,7 @@ final class ImmutabilityTest extends TestCase
      */
     public function testImmutability(): void
     {
-        $month = Month::create();
+        $month = Month::create(construct: [new PropertyTypeForm(), 'string']);
         $this->assertNotSame($month, $month->max(0));
         $this->assertNotSame($month, $month->min(0));
         $this->assertNotSame($month, $month->step(0));

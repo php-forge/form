@@ -18,7 +18,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="number" max="10">',
-            Number::create()->for(new PropertyTypeForm(), 'string')->max(10)->render(),
+            Number::create(construct: [new PropertyTypeForm(), 'string'])->max(10)->render(),
         );
     }
 
@@ -29,7 +29,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="number" min="4">',
-            Number::create()->for(new PropertyTypeForm(), 'string')->min(4)->render(),
+            Number::create(construct: [new PropertyTypeForm(), 'string'])->min(4)->render(),
         );
     }
 
@@ -40,7 +40,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="number" placeholder="test.placeholder">',
-            Number::create()->for(new PropertyTypeForm(), 'string')->placeholder('test.placeholder')->render(),
+            Number::create(construct: [new PropertyTypeForm(), 'string'])->placeholder('test.placeholder')->render(),
         );
     }
 
@@ -51,7 +51,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="number" step="1">',
-            Number::create()->for(new PropertyTypeForm(), 'string')->step('1')->render(),
+            Number::create(construct: [new PropertyTypeForm(), 'string'])->step('1')->render(),
         );
     }
 
@@ -63,13 +63,13 @@ final class InputAttibutesTest extends TestCase
         // Value string `1`.
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="number" value="1">',
-            Number::create()->for(new PropertyTypeForm(), 'string')->value('1')->render(),
+            Number::create(construct: [new PropertyTypeForm(), 'string'])->value('1')->render(),
         );
 
         // Value `null`.
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="number">',
-            Number::create()->for(new PropertyTypeForm(), 'string')->value(null)->render(),
+            Number::create(construct: [new PropertyTypeForm(), 'string'])->value(null)->render(),
         );
     }
 
@@ -82,16 +82,18 @@ final class InputAttibutesTest extends TestCase
 
         // Value string `1`.
         $formModel->setValue('string', '1');
+
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="number" value="1">',
-            Number::create()->for($formModel, 'string')->render(),
+            Number::create(construct: [$formModel, 'string'])->render(),
         );
 
         // Value `null`.
         $formModel->setValue('string', null);
+
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="number">',
-            Number::create()->for($formModel, 'string')->render(),
+            Number::create(construct: [$formModel, 'string'])->render(),
         );
     }
 }

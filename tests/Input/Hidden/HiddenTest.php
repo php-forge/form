@@ -18,7 +18,7 @@ final class HiddenTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="hidden">',
-            Hidden::create()->for(new PropertyTypeForm(), 'string')->render(),
+            Hidden::create(construct: [new PropertyTypeForm(), 'string'])->render(),
         );
     }
 }

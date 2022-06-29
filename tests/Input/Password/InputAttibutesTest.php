@@ -18,7 +18,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="password" maxlength="10">',
-            Password::create()->for(new PropertyTypeForm(), 'string')->maxlength(10)->render(),
+            Password::create(construct: [new PropertyTypeForm(), 'string'])->maxlength(10)->render(),
         );
     }
 
@@ -29,7 +29,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="password" minlength="4">',
-            Password::create()->for(new PropertyTypeForm(), 'string')->minlength(4)->render(),
+            Password::create(construct: [new PropertyTypeForm(), 'string'])->minlength(4)->render(),
         );
     }
 
@@ -38,15 +38,13 @@ final class InputAttibutesTest extends TestCase
      */
     public function testPattern(): void
     {
-        $expected = <<<'HTML'
-        <input id="propertytypeform-string" name="PropertyTypeForm[string]" type="password" title="Only accepts uppercase and lowercase letters." pattern="[A-Za-z]">
-        HTML;
-        $html = Password::create()
-            ->for(new PropertyTypeForm(), 'string')
-            ->pattern('[A-Za-z]')
-            ->title('Only accepts uppercase and lowercase letters.')
-            ->render();
-        $this->assertSame($expected, $html);
+        $this->assertSame(
+            '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="password" title="Only accepts uppercase and lowercase letters." pattern="[A-Za-z]">',
+            Password::create(construct: [new PropertyTypeForm(), 'string'])
+                ->pattern('[A-Za-z]')
+                ->title('Only accepts uppercase and lowercase letters.')
+                ->render(),
+        );
     }
 
     /**
@@ -56,7 +54,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="password" placeholder="test.placeholder">',
-            Password::create()->for(new PropertyTypeForm(), 'string')->placeholder('test.placeholder')->render(),
+            Password::create(construct: [new PropertyTypeForm(), 'string'])->placeholder('test.placeholder')->render(),
         );
     }
 
@@ -67,7 +65,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="password" size="10">',
-            Password::create()->for(new PropertyTypeForm(), 'string')->size(10)->render(),
+            Password::create(construct: [new PropertyTypeForm(), 'string'])->size(10)->render(),
         );
     }
 
@@ -79,13 +77,13 @@ final class InputAttibutesTest extends TestCase
         // Value string `test.string`.
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="password" value="test.string">',
-            Password::create()->for(new PropertyTypeForm(), 'string')->value('test.string')->render(),
+            Password::create(construct: [new PropertyTypeForm(), 'string'])->value('test.string')->render(),
         );
 
         // Value `null`.
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="password">',
-            Password::create()->for(new PropertyTypeForm(), 'string')->value(null)->render(),
+            Password::create(construct: [new PropertyTypeForm(), 'string'])->value(null)->render(),
         );
     }
 
@@ -98,16 +96,18 @@ final class InputAttibutesTest extends TestCase
 
         // Value string `test.string`.
         $formModel->setValue('string', 'test.string');
+
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="password" value="test.string">',
-            Password::create()->for($formModel, 'string')->render(),
+            Password::create(construct: [$formModel, 'string'])->render(),
         );
 
         // Value `null`.
         $formModel->setValue('string', null);
+
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="password">',
-            Password::create()->for($formModel, 'string')->render(),
+            Password::create(construct: [$formModel, 'string'])->render(),
         );
     }
 }

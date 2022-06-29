@@ -18,7 +18,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="range" max="10">',
-            Range::create()->for(new PropertyTypeForm(), 'string')->max(10)->render(),
+            Range::create(construct: [new PropertyTypeForm(), 'string'])->max(10)->render(),
         );
     }
 
@@ -29,7 +29,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="range" min="4">',
-            Range::create()->for(new PropertyTypeForm(), 'string')->min(4)->render(),
+            Range::create(construct: [new PropertyTypeForm(), 'string'])->min(4)->render(),
         );
     }
 
@@ -40,7 +40,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="range" step="1">',
-            Range::create()->for(new PropertyTypeForm(), 'string')->step('1')->render(),
+            Range::create(construct: [new PropertyTypeForm(), 'string'])->step('1')->render(),
         );
     }
 
@@ -52,13 +52,13 @@ final class InputAttibutesTest extends TestCase
         // Value string `1`.
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="range" value="1">',
-            Range::create()->for(new PropertyTypeForm(), 'string')->value('1')->render(),
+            Range::create(construct: [new PropertyTypeForm(), 'string'])->value('1')->render(),
         );
 
         // Value `null`.
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="range">',
-            Range::create()->for(new PropertyTypeForm(), 'string')->value(null)->render(),
+            Range::create(construct: [new PropertyTypeForm(), 'string'])->value(null)->render(),
         );
     }
 
@@ -71,16 +71,17 @@ final class InputAttibutesTest extends TestCase
 
         // Value string `1`.
         $formModel->setValue('string', '1');
+
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="range" value="1">',
-            Range::create()->for($formModel, 'string')->render(),
+            Range::create(construct: [$formModel, 'string'])->render(),
         );
 
         // Value `null`.
         $formModel->setValue('string', null);
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="range">',
-            Range::create()->for($formModel, 'string')->render(),
+            Range::create(construct: [$formModel, 'string'])->render(),
         );
     }
 }

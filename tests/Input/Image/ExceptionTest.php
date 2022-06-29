@@ -19,7 +19,7 @@ final class ExceptionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The alt attribute must be empty.');
-        Image::create()->for(new PropertyTypeForm(), 'string')->alt('')->render();
+        Image::create(construct: [new PropertyTypeForm(), 'string'])->alt('')->render();
     }
 
     /**
@@ -29,7 +29,7 @@ final class ExceptionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The formaction attribute must be empty.');
-        Image::create()->for(new PropertyTypeForm(), 'string')->formaction('')->render();
+        Image::create(construct: [new PropertyTypeForm(), 'string'])->formaction('')->render();
     }
 
     /**
@@ -42,7 +42,7 @@ final class ExceptionTest extends TestCase
             'The formenctype attribute must be one of the following values: ' .
             '"multipart/form-data", "application/x-www-form-urlencoded", "text/plain"'
         );
-        Image::create()->for(new PropertyTypeForm(), 'string')->formenctype('')->render();
+        Image::create(construct: [new PropertyTypeForm(), 'string'])->formenctype('')->render();
     }
 
     /**
@@ -52,7 +52,7 @@ final class ExceptionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The formnMethod attribute must be either "get" or "post".');
-        Image::create()->for(new PropertyTypeForm(), 'string')->formmethod('')->render();
+        Image::create(construct: [new PropertyTypeForm(), 'string'])->formmethod('')->render();
     }
 
     /**
@@ -64,7 +64,7 @@ final class ExceptionTest extends TestCase
         $this->expectExceptionMessage(
             'The formtarget attribute value must be one of "_blank", "_self", "_parent" or "_top"'
         );
-        Image::create()->for(new PropertyTypeForm(), 'string')->formtarget('')->render();
+        Image::create(construct: [new PropertyTypeForm(), 'string'])->formtarget('')->render();
     }
 
     /**
@@ -74,6 +74,6 @@ final class ExceptionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Image::class widget must be a string or null value.');
-        Image::create()->for(new PropertyTypeForm(), 'array')->render();
+        Image::create(construct: [new PropertyTypeForm(), 'array'])->render();
     }
 }

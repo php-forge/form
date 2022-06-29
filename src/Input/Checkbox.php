@@ -42,7 +42,7 @@ final class Checkbox extends Base\Input
         $values['value'] = $value;
 
         $new = clone $this;
-        $new->hidden = Hidden::create()->attributes($values)->for($this->getFormModel(), $this->getAttribute());
+        $new->hidden = Hidden::create(construct: [$this->getFormModel(), $this->getAttribute()])->attributes($values);
 
         return $new;
     }
@@ -73,14 +73,16 @@ final class Checkbox extends Base\Input
             true => $this->checked,
             default => "$value" === "$valueDefault",
         };
+
         /** @var mixed */
         $attributes['value'] = is_bool($valueDefault) ? (int) $valueDefault : $valueDefault;
+
         $label = $this->label === '' ? ' ' . ucfirst($this->getAttribute()) : $this->label;
-        $radioTag = $this->input('checkbox', $attributes) . (string) $label;
+        $checkboxTag = $this->input('checkbox', $attributes) . (string) $label;
 
         return match ($this->hidden) {
-            null => $radioTag,
-            default => $this->hidden->id(null)->name($this->getInputName())->render() . PHP_EOL . $radioTag,
+            null => $checkboxTag,
+            default => $this->hidden->id(null)->name($this->getInputName())->render() . PHP_EOL . $checkboxTag,
         };
     }
 }

@@ -18,7 +18,7 @@ final class DateTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="date">',
-            Date::create()->for(new PropertyTypeForm(), 'string')->render(),
+            Date::create(construct: [new PropertyTypeForm(), 'string'])->render(),
         );
     }
 }

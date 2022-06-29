@@ -16,9 +16,9 @@ final class ImmutabilityTest extends TestCase
      */
     public function testImmutability(): void
     {
-        $radio = Radio::create();
+        $radio = Radio::create(construct: [new PropertyTypeForm(), 'string']);
         $this->assertNotSame($radio, $radio->checked(false));
-        $this->assertNotSame($radio, $radio->for(new PropertyTypeForm(), 'int')->hidden('', []));
+        $this->assertNotSame($radio, $radio->hidden('', []));
         $this->assertNotSame($radio, $radio->label(''));
     }
 }

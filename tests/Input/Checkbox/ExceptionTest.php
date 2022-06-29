@@ -19,6 +19,6 @@ final class ExceptionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Checkbox::class widget value can not be an iterable or an object.');
-        Checkbox::create()->for(new PropertyTypeForm(), 'array')->render();
+        Checkbox::create(construct: [new PropertyTypeForm(), 'array'])->render();
     }
 }

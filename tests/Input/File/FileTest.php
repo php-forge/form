@@ -24,7 +24,7 @@ final class FileTest extends TestCase
             <input id="propertytypeform-string" name="PropertyTypeForm[string]" type="hidden" value="0">
             <input id="propertytypeform-string" name="PropertyTypeForm[string][]" type="file">
             HTML,
-            File::create()->for(new PropertyTypeForm(), 'string')->hidden('0')->render(),
+            File::create(construct: [new PropertyTypeForm(), 'string'])->hidden('0')->render(),
         );
     }
 
@@ -35,7 +35,7 @@ final class FileTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string][]" type="file">',
-            File::create()->for(new PropertyTypeForm(), 'string')->render(),
+            File::create(construct: [new PropertyTypeForm(), 'string'])->render(),
         );
     }
 }

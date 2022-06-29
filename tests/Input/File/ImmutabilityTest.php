@@ -16,9 +16,9 @@ final class ImmutabilityTest extends TestCase
      */
     public function testImmutability(): void
     {
-        $file = File::create();
+        $file = File::create(construct: [new PropertyTypeForm(), 'string']);
         $this->assertNotSame($file, $file->accept('image/png'));
-        $this->assertNotSame($file, $file->for(new PropertyTypeForm(), 'string')->hidden('', []));
+        $this->assertNotSame($file, $file->hidden('', []));
         $this->assertNotSame($file, $file->multiple());
     }
 }

@@ -18,7 +18,7 @@ final class UrlTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="url">',
-            Url::create()->for(new PropertyTypeForm(), 'string')->render(),
+            Url::create(construct: [new PropertyTypeForm(), 'string'])->render(),
         );
     }
 }

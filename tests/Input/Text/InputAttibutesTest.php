@@ -18,7 +18,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="text" dirname="test.dir">',
-            Text::create()->for(new PropertyTypeForm(), 'string')->dirname('test.dir')->render(),
+            Text::create(construct: [new PropertyTypeForm(), 'string'])->dirname('test.dir')->render(),
         );
     }
 
@@ -29,7 +29,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="text" maxlength="10">',
-            Text::create()->for(new PropertyTypeForm(), 'string')->maxlength(10)->render(),
+            Text::create(construct: [new PropertyTypeForm(), 'string'])->maxlength(10)->render(),
         );
     }
 
@@ -40,7 +40,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="text" minlength="4">',
-            Text::create()->for(new PropertyTypeForm(), 'string')->minlength(4)->render(),
+            Text::create(construct: [new PropertyTypeForm(), 'string'])->minlength(4)->render(),
         );
     }
 
@@ -52,8 +52,7 @@ final class InputAttibutesTest extends TestCase
         $expected = <<<'HTML'
         <input id="propertytypeform-string" name="PropertyTypeForm[string]" type="text" title="Only accepts uppercase and lowercase letters." pattern="[A-Za-z]">
         HTML;
-        $html = Text::create()
-            ->for(new PropertyTypeForm(), 'string')
+        $html = Text::create(construct: [new PropertyTypeForm(), 'string'])
             ->pattern('[A-Za-z]')
             ->title('Only accepts uppercase and lowercase letters.')
             ->render();
@@ -67,7 +66,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="text" placeholder="test.placeholder">',
-            Text::create()->for(new PropertyTypeForm(), 'string')->placeholder('test.placeholder')->render(),
+            Text::create(construct: [new PropertyTypeForm(), 'string'])->placeholder('test.placeholder')->render(),
         );
     }
 
@@ -78,7 +77,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="text" size="10">',
-            Text::create()->for(new PropertyTypeForm(), 'string')->size(10)->render(),
+            Text::create(construct: [new PropertyTypeForm(), 'string'])->size(10)->render(),
         );
     }
 
@@ -90,13 +89,13 @@ final class InputAttibutesTest extends TestCase
         // Value string `test.string`.
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="text" value="test.string">',
-            Text::create()->for(new PropertyTypeForm(), 'string')->value('test.string')->render(),
+            Text::create(construct: [new PropertyTypeForm(), 'string'])->value('test.string')->render(),
         );
 
         // Value `null`.
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="text">',
-            Text::create()->for(new PropertyTypeForm(), 'string')->value(null)->render(),
+            Text::create(construct: [new PropertyTypeForm(), 'string'])->value(null)->render(),
         );
     }
 
@@ -109,16 +108,18 @@ final class InputAttibutesTest extends TestCase
 
         // Value string `test.string`.
         $formModel->setValue('string', 'test.string');
+
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="text" value="test.string">',
-            Text::create()->for($formModel, 'string')->render(),
+            Text::create(construct: [$formModel, 'string'])->render(),
         );
 
         // Value `null`.
         $formModel->setValue('string', null);
+
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="text">',
-            Text::create()->for($formModel, 'string')->render(),
+            Text::create(construct: [$formModel, 'string'])->render(),
         );
     }
 }

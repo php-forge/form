@@ -18,7 +18,7 @@ final class TimeTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="time">',
-            Time::create()->for(new PropertyTypeForm(), 'string')->render(),
+            Time::create(construct: [new PropertyTypeForm(), 'string'])->render(),
         );
     }
 }

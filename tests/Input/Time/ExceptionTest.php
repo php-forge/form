@@ -19,6 +19,6 @@ final class ExceptionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Time::class widget must be a string or null value.');
-        Time::create()->for(new PropertyTypeForm(), 'array')->render();
+        Time::create(construct: [new PropertyTypeForm(), 'array'])->render();
     }
 }

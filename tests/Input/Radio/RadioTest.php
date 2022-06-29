@@ -20,13 +20,13 @@ final class RadioTest extends TestCase
         // default value is `false`.
         $this->assertSame(
             '<input id="propertytypeform-int" name="PropertyTypeForm[int]" type="radio" value="1"> Int',
-            Radio::create()->for(new PropertyTypeForm(), 'int')->value(1)->render(),
+            Radio::create(construct: [new PropertyTypeForm(), 'int'])->value(1)->render(),
         );
 
         // checked value is `true`.
         $this->assertSame(
             '<input id="propertytypeform-int" name="PropertyTypeForm[int]" type="radio" value="1" checked> Int',
-            Radio::create()->checked(true)->for(new PropertyTypeForm(), 'int')->value(1)->render(),
+            Radio::create(construct: [new PropertyTypeForm(), 'int'])->checked(true)->value(1)->render(),
         );
     }
 
@@ -42,7 +42,7 @@ final class RadioTest extends TestCase
             <input name="PropertyTypeForm[int]" type="hidden" value="0">
             <input id="propertytypeform-int" name="PropertyTypeForm[int]" type="radio" value="1"> Int
             HTML,
-            Radio::create()->for(new PropertyTypeForm(), 'int')->hidden('0')->value(1)->render(),
+            Radio::create(construct: [new PropertyTypeForm(), 'int'])->hidden('0')->value(1)->render(),
         );
     }
 
@@ -53,7 +53,7 @@ final class RadioTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-bool" name="PropertyTypeForm[bool]" type="radio"> Bool',
-            Radio::create()->for(new PropertyTypeForm(), 'bool')->render(),
+            Radio::create(construct: [new PropertyTypeForm(), 'bool'])->render(),
         );
     }
 
@@ -64,7 +64,7 @@ final class RadioTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-bool" name="PropertyTypeForm[bool]" type="radio">',
-            Radio::create()->for(new PropertyTypeForm(), 'bool')->label(null)->render(),
+            Radio::create(construct: [new PropertyTypeForm(), 'bool'])->label(null)->render(),
         );
     }
 }

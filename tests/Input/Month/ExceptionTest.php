@@ -19,6 +19,6 @@ final class ExceptionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Month::class widget must be a string or null value.');
-        Month::create()->for(new PropertyTypeForm(), 'array')->render();
+        Month::create(construct: [new PropertyTypeForm(), 'array'])->render();
     }
 }

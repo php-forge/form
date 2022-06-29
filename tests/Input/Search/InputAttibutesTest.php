@@ -18,7 +18,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="search" dirname="test.dir">',
-            Search::create()->for(new PropertyTypeForm(), 'string')->dirname('test.dir')->render(),
+            Search::create(construct: [new PropertyTypeForm(), 'string'])->dirname('test.dir')->render(),
         );
     }
 
@@ -29,7 +29,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="search" maxlength="10">',
-            Search::create()->for(new PropertyTypeForm(), 'string')->maxlength(10)->render(),
+            Search::create(construct: [new PropertyTypeForm(), 'string'])->maxlength(10)->render(),
         );
     }
 
@@ -40,7 +40,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="search" minlength="4">',
-            Search::create()->for(new PropertyTypeForm(), 'string')->minlength(4)->render(),
+            Search::create(construct: [new PropertyTypeForm(), 'string'])->minlength(4)->render(),
         );
     }
 
@@ -52,8 +52,7 @@ final class InputAttibutesTest extends TestCase
         $expected = <<<'HTML'
         <input id="propertytypeform-string" name="PropertyTypeForm[string]" type="search" title="Only accepts uppercase and lowercase letters." pattern="[A-Za-z]">
         HTML;
-        $html = Search::create()
-            ->for(new PropertyTypeForm(), 'string')
+        $html = Search::create(construct: [new PropertyTypeForm(), 'string'])
             ->pattern('[A-Za-z]')
             ->title('Only accepts uppercase and lowercase letters.')
             ->render();
@@ -67,7 +66,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="search" placeholder="test.placeholder">',
-            Search::create()->for(new PropertyTypeForm(), 'string')->placeholder('test.placeholder')->render(),
+            Search::create(construct: [new PropertyTypeForm(), 'string'])->placeholder('test.placeholder')->render(),
         );
     }
 
@@ -78,7 +77,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="search" size="10">',
-            Search::create()->for(new PropertyTypeForm(), 'string')->size(10)->render(),
+            Search::create(construct: [new PropertyTypeForm(), 'string'])->size(10)->render(),
         );
     }
 
@@ -90,13 +89,13 @@ final class InputAttibutesTest extends TestCase
         // Value string `test.string`.
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="search" value="test.string">',
-            Search::create()->for(new PropertyTypeForm(), 'string')->value('test.string')->render(),
+            Search::create(construct: [new PropertyTypeForm(), 'string'])->value('test.string')->render(),
         );
 
         // Value `null`.
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="search">',
-            Search::create()->for(new PropertyTypeForm(), 'string')->value(null)->render(),
+            Search::create(construct: [new PropertyTypeForm(), 'string'])->value(null)->render(),
         );
     }
 
@@ -109,16 +108,18 @@ final class InputAttibutesTest extends TestCase
 
         // Value string `test.string`.
         $formModel->setValue('string', 'test.string');
+
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="search" value="test.string">',
-            Search::create()->for($formModel, 'string')->render(),
+            Search::create(construct: [$formModel, 'string'])->render(),
         );
 
         // Value `null`.
         $formModel->setValue('string', null);
+
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="search">',
-            Search::create()->for($formModel, 'string')->render(),
+            Search::create(construct: [$formModel, 'string'])->render(),
         );
     }
 }

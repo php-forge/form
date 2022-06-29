@@ -18,7 +18,7 @@ final class RangeTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="range">',
-            Range::create()->for(new PropertyTypeForm(), 'string')->render(),
+            Range::create(construct: [new PropertyTypeForm(), 'string'])->render(),
         );
     }
 }

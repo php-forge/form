@@ -18,7 +18,7 @@ final class TelTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="tel">',
-            Tel::create()->for(new PropertyTypeForm(), 'string')->render(),
+            Tel::create(construct: [new PropertyTypeForm(), 'string'])->render(),
         );
     }
 }

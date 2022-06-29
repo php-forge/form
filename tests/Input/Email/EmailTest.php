@@ -18,7 +18,7 @@ final class EmailTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="email">',
-            Email::create()->for(new PropertyTypeForm(), 'string')->render(),
+            Email::create(construct: [new PropertyTypeForm(), 'string'])->render(),
         );
     }
 }

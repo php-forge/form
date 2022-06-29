@@ -18,7 +18,7 @@ final class WeekTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="week">',
-            Week::create()->for(new PropertyTypeForm(), 'string')->render(),
+            Week::create(construct: [new PropertyTypeForm(), 'string'])->render(),
         );
     }
 }

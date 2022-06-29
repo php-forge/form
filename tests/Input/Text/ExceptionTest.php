@@ -19,7 +19,7 @@ final class ExceptionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The value cannot be empty.');
-        Text::create()->for(new PropertyTypeForm(), 'string')->dirname('')->render();
+        Text::create(construct: [new PropertyTypeForm(), 'string'])->dirname('')->render();
     }
 
     /**
@@ -29,6 +29,6 @@ final class ExceptionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Text::class widget must be a string or null value.');
-        Text::create()->for(new PropertyTypeForm(), 'array')->render();
+        Text::create(construct: [new PropertyTypeForm(), 'array'])->render();
     }
 }

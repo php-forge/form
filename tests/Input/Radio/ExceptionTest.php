@@ -19,6 +19,6 @@ final class ExceptionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Radio::class widget value can not be an iterable or an object.');
-        Radio::create()->for(new PropertyTypeForm(), 'array')->render();
+        Radio::create(construct: [new PropertyTypeForm(), 'array'])->render();
     }
 }

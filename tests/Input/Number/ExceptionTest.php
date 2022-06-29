@@ -19,6 +19,6 @@ final class ExceptionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Number::class widget must be a numeric or null value.');
-        Number::create()->for(new PropertyTypeForm(), 'array')->render();
+        Number::create(construct: [new PropertyTypeForm(), 'array'])->render();
     }
 }

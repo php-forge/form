@@ -18,7 +18,7 @@ final class MonthTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="month">',
-            Month::create()->for(new PropertyTypeForm(), 'string')->render(),
+            Month::create(construct: [new PropertyTypeForm(), 'string'])->render(),
         );
     }
 }

@@ -36,7 +36,7 @@ final class File extends Base\Input
         $values['value'] = $value;
 
         $new = clone $this;
-        $new->hidden = Hidden::create()->attributes($values)->for($this->getFormModel(), $this->getAttribute());
+        $new->hidden = Hidden::create(construct: [$this->getFormModel(), $this->getAttribute()])->attributes($values);
 
         return $new;
     }

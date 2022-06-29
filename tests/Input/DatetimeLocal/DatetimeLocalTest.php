@@ -18,7 +18,7 @@ final class DatetimeLocalTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="datetime-local">',
-            DatetimeLocal::create()->for(new PropertyTypeForm(), 'string')->render(),
+            DatetimeLocal::create(construct: [new PropertyTypeForm(), 'string'])->render(),
         );
     }
 }

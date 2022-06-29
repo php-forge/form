@@ -18,7 +18,7 @@ final class ImageTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="image">',
-            Image::create()->for(new PropertyTypeForm(), 'string')->render(),
+            Image::create(construct: [new PropertyTypeForm(), 'string'])->render(),
         );
     }
 }

@@ -19,13 +19,13 @@ final class InputAttibutesTest extends TestCase
         // Value string `#ff0000`.
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="color" value="#ff0000">',
-            Color::create()->for(new PropertyTypeForm(), 'string')->value('#ff0000')->render(),
+            Color::create(construct: [new PropertyTypeForm(), 'string'])->value('#ff0000')->render(),
         );
 
         // Value `null`.
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="color">',
-            Color::create()->for(new PropertyTypeForm(), 'string')->value(null)->render(),
+            Color::create(construct: [new PropertyTypeForm(), 'string'])->value(null)->render(),
         );
     }
 
@@ -38,16 +38,18 @@ final class InputAttibutesTest extends TestCase
 
         // Value string `#ff0000`.
         $formModel->setValue('string', '#ff0000');
+
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="color" value="#ff0000">',
-            Color::create()->for($formModel, 'string')->render(),
+            Color::create(construct: [$formModel, 'string'])->render(),
         );
 
         // Value `null`.
         $formModel->setValue('string', null);
+
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="color">',
-            Color::create()->for($formModel, 'string')->render(),
+            Color::create(construct: [$formModel, 'string'])->render(),
         );
     }
 }

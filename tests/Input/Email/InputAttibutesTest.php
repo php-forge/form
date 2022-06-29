@@ -18,7 +18,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="email" maxlength="10">',
-            Email::create()->for(new PropertyTypeForm(), 'string')->maxlength(10)->render(),
+            Email::create(construct: [new PropertyTypeForm(), 'string'])->maxlength(10)->render(),
         );
     }
 
@@ -29,7 +29,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="email" minlength="4">',
-            Email::create()->for(new PropertyTypeForm(), 'string')->minlength(4)->render(),
+            Email::create(construct: [new PropertyTypeForm(), 'string'])->minlength(4)->render(),
         );
     }
 
@@ -40,8 +40,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="email" value="email1@example.com">',
-            Email::create()
-                ->for(new PropertyTypeForm(), 'string')
+            Email::create(construct: [new PropertyTypeForm(), 'string'])
                 ->multiple(false)
                 ->value('email1@example.com')
                 ->render(),
@@ -49,8 +48,7 @@ final class InputAttibutesTest extends TestCase
 
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="email" value="email1@example.com;email2@example.com;" multiple>',
-            Email::create()
-                ->for(new PropertyTypeForm(), 'string')
+            Email::create(construct: [new PropertyTypeForm(), 'string'])
                 ->multiple()
                 ->value('email1@example.com;email2@example.com;')
                 ->render(),
@@ -64,10 +62,9 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="email" pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,4}">',
-            Email::create()
-            ->for(new PropertyTypeForm(), 'string')
-            ->pattern('[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,4}')
-            ->render(),
+            Email::create(construct: [new PropertyTypeForm(), 'string'])
+                ->pattern('[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,4}')
+                ->render(),
         );
     }
 
@@ -78,7 +75,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="email" placeholder="test.placeholder">',
-            Email::create()->for(new PropertyTypeForm(), 'string')->placeholder('test.placeholder')->render(),
+            Email::create(construct: [new PropertyTypeForm(), 'string'])->placeholder('test.placeholder')->render(),
         );
     }
 
@@ -89,7 +86,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="email" size="10">',
-            Email::create()->for(new PropertyTypeForm(), 'string')->size(10)->render(),
+            Email::create(construct: [new PropertyTypeForm(), 'string'])->size(10)->render(),
         );
     }
 
@@ -101,13 +98,13 @@ final class InputAttibutesTest extends TestCase
         // Value string `test.string`.
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="email" value="test.string">',
-            Email::create()->for(new PropertyTypeForm(), 'string')->value('test.string')->render(),
+            Email::create(construct: [new PropertyTypeForm(), 'string'])->value('test.string')->render(),
         );
 
         // Value `null`.
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="email">',
-            Email::create()->for(new PropertyTypeForm(), 'string')->value(null)->render(),
+            Email::create(construct: [new PropertyTypeForm(), 'string'])->value(null)->render(),
         );
     }
 
@@ -120,16 +117,18 @@ final class InputAttibutesTest extends TestCase
 
         // Value string `test.string`.
         $formModel->setValue('string', 'test.string');
+
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="email" value="test.string">',
-            Email::create()->for($formModel, 'string')->render(),
+            Email::create(construct: [$formModel, 'string'])->render(),
         );
 
         // Value `null`.
         $formModel->setValue('string', null);
+
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="email">',
-            Email::create()->for($formModel, 'string')->render(),
+            Email::create(construct: [$formModel, 'string'])->render(),
         );
     }
 }

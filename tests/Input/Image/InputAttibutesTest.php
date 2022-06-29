@@ -18,7 +18,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="image" alt="test.alt">',
-            Image::create()->for(new PropertyTypeForm(), 'string')->alt('test.alt')->render(),
+            Image::create(construct: [new PropertyTypeForm(), 'string'])->alt('test.alt')->render(),
         );
     }
 
@@ -29,7 +29,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="image" formaction="/image.php">',
-            Image::create()->for(new PropertyTypeForm(), 'string')->formaction('/image.php')->render(),
+            Image::create(construct: [new PropertyTypeForm(), 'string'])->formaction('/image.php')->render(),
         );
     }
 
@@ -40,7 +40,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="image" formenctype="multipart/form-data">',
-            Image::create()->for(new PropertyTypeForm(), 'string')->formenctype('multipart/form-data')->render(),
+            Image::create(construct: [new PropertyTypeForm(), 'string'])->formenctype('multipart/form-data')->render(),
         );
     }
 
@@ -51,7 +51,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="image" formn-method="post">',
-            Image::create()->for(new PropertyTypeForm(), 'string')->formmethod('post')->render(),
+            Image::create(construct: [new PropertyTypeForm(), 'string'])->formmethod('post')->render(),
         );
     }
 
@@ -62,7 +62,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="image" formtarget="_blank">',
-            Image::create()->for(new PropertyTypeForm(), 'string')->formtarget('_blank')->render(),
+            Image::create(construct: [new PropertyTypeForm(), 'string'])->formtarget('_blank')->render(),
         );
     }
 
@@ -73,7 +73,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="image" formnovalidate>',
-            Image::create()->for(new PropertyTypeForm(), 'string')->formnovalidate()->render(),
+            Image::create(construct: [new PropertyTypeForm(), 'string'])->formnovalidate()->render(),
         );
     }
 
@@ -84,7 +84,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="image" height="100">',
-            Image::create()->for(new PropertyTypeForm(), 'string')->height(100)->render(),
+            Image::create(construct: [new PropertyTypeForm(), 'string'])->height(100)->render(),
         );
     }
 
@@ -95,7 +95,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="image" src="https://image.png">',
-            Image::create()->for(new PropertyTypeForm(), 'string')->src('https://image.png')->render(),
+            Image::create(construct: [new PropertyTypeForm(), 'string'])->src('https://image.png')->render(),
         );
     }
 
@@ -107,13 +107,13 @@ final class InputAttibutesTest extends TestCase
         // Value string `https://image.png`.
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="image" src="https://image.png">',
-            Image::create()->for(new PropertyTypeForm(), 'string')->value('https://image.png')->render(),
+            Image::create(construct: [new PropertyTypeForm(), 'string'])->value('https://image.png')->render(),
         );
 
         // Value `null`.
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="image">',
-            Image::create()->for(new PropertyTypeForm(), 'string')->value(null)->render(),
+            Image::create(construct: [new PropertyTypeForm(), 'string'])->value(null)->render(),
         );
     }
 
@@ -126,16 +126,18 @@ final class InputAttibutesTest extends TestCase
 
         // Value string `https://image.png`.
         $formModel->setValue('string', 'https://image.png');
+
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="image" src="https://image.png">',
-            Image::create()->for($formModel, 'string')->render(),
+            Image::create(construct: [$formModel, 'string'])->render(),
         );
 
         // Value `null`.
         $formModel->setValue('string', null);
+
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="image">',
-            Image::create()->for($formModel, 'string')->render(),
+            Image::create(construct: [$formModel, 'string'])->render(),
         );
     }
 
@@ -146,7 +148,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="image" width="50.1">',
-            Image::create()->for(new PropertyTypeForm(), 'string')->width(50.1)->render(),
+            Image::create(construct: [new PropertyTypeForm(), 'string'])->width(50.1)->render(),
         );
     }
 }

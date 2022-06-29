@@ -19,6 +19,6 @@ final class ExceptionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Hidden::class widget must be a string or null value.');
-        Hidden::create()->for(new PropertyTypeForm(), 'array')->render();
+        Hidden::create(construct: [new PropertyTypeForm(), 'array'])->render();
     }
 }

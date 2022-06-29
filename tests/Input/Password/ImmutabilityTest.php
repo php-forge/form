@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Forge\Form\Tests\Input\Password;
 
 use Forge\Form\Input\Password;
+use Forge\Form\Tests\Support\PropertyTypeForm;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 
@@ -15,7 +16,7 @@ final class ImmutabilityTest extends TestCase
      */
     public function testImmutability(): void
     {
-        $password = Password::create();
+        $password = Password::create(construct: [new PropertyTypeForm(), 'string']);
         $this->assertNotSame($password, $password->maxlength(0));
         $this->assertNotSame($password, $password->minlength(0));
         $this->assertNotSame($password, $password->pattern(''));

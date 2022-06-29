@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Forge\Form\Tests\Input\Text;
+namespace Forge\Form\Tests\Field;
 
-use Forge\Form\Input\Text;
+use Forge\Form\Field;
 use Forge\Form\Tests\Support\PropertyTypeForm;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 
-final class TextTest extends TestCase
+final class FieldTest extends TestCase
 {
     /**
      * @throws ReflectionException
@@ -17,8 +17,8 @@ final class TextTest extends TestCase
     public function testRender(): void
     {
         $this->assertSame(
-            '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="text">',
-            Text::create(construct: [new PropertyTypeForm(), 'string'])->render(),
+            '',
+            Field::create(construct: [new PropertyTypeForm(), 'string'])->checkbox()->render(),
         );
     }
 }

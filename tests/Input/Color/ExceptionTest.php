@@ -19,6 +19,6 @@ final class ExceptionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Color::class widget must be a string or null value.');
-        Color::create()->for(new PropertyTypeForm(), 'array')->render();
+        Color::create(construct: [new PropertyTypeForm(), 'array'])->render();
     }
 }

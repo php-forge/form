@@ -18,7 +18,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string][]" type="file" accept="image/png, image/jpeg">',
-            File::create()->for(new PropertyTypeForm(), 'string')->accept('image/png, image/jpeg')->render(),
+            File::create(construct: [new PropertyTypeForm(), 'string'])->accept('image/png, image/jpeg')->render(),
         );
     }
 
@@ -29,7 +29,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string][]" type="file" multiple>',
-            File::create()->for(new PropertyTypeForm(), 'string')->multiple()->render(),
+            File::create(construct: [new PropertyTypeForm(), 'string'])->multiple()->render(),
         );
     }
 
@@ -40,7 +40,7 @@ final class InputAttibutesTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="test.name[]" type="file">',
-            File::create()->for(new PropertyTypeForm(), 'string')->name('test.name')->render(),
+            File::create(construct: [new PropertyTypeForm(), 'string'])->name('test.name')->render(),
         );
     }
 }

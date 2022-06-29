@@ -18,7 +18,7 @@ final class ColorTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="color">',
-            Color::create()->for(new PropertyTypeForm(), 'string')->render(),
+            Color::create(construct: [new PropertyTypeForm(), 'string'])->render(),
         );
     }
 }

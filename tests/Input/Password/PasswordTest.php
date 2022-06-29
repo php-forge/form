@@ -18,7 +18,7 @@ final class PasswordTest extends TestCase
     {
         $this->assertSame(
             '<input id="propertytypeform-string" name="PropertyTypeForm[string]" type="password">',
-            Password::create()->for(new PropertyTypeForm(), 'string')->render(),
+            Password::create(construct: [new PropertyTypeForm(), 'string'])->render(),
         );
     }
 }

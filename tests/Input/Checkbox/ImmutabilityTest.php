@@ -16,9 +16,8 @@ final class ImmutabilityTest extends TestCase
      */
     public function testImmutability(): void
     {
-        $checkbox = Checkbox::create();
+        $checkbox = Checkbox::create(construct: [new PropertyTypeForm(), 'int']);
         $this->assertNotSame($checkbox, $checkbox->checked(false));
-        $this->assertNotSame($checkbox, $checkbox->for(new PropertyTypeForm(), 'int')->hidden('', []));
         $this->assertNotSame($checkbox, $checkbox->label(''));
     }
 }

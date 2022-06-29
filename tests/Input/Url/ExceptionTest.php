@@ -19,6 +19,6 @@ final class ExceptionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Url::class widget must be a string or null value.');
-        Url::create()->for(new PropertyTypeForm(), 'array')->render();
+        Url::create(construct: [new PropertyTypeForm(), 'array'])->render();
     }
 }
