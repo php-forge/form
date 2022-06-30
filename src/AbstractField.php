@@ -63,7 +63,7 @@ abstract class AbstractField extends AbstractWidget
     private function renderError(): string
     {
         $errorAttributes = $this->errorAttributes;
-        $widget = $this->widget;
+        $widget = $this->getWidget();
 
         return Base\Field\Error::create(construct: [$widget->getFormModel(), $widget->getAttribute()])
             ->attributes($errorAttributes)
