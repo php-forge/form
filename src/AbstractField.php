@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Forge\Form;
 
 use Forge\Form\Base\Widget;
-use Forge\Model\Attribute\FormModelAttributes;
 use Forge\Widget\AbstractWidget;
 use InvalidArgumentException;
 use ReflectionException;
