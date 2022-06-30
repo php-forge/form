@@ -4,66 +4,103 @@ declare(strict_types=1);
 
 namespace Forge\Form;
 
-use Forge\Html\Helper\CssClass;
+use Forge\Form\Base\Widget;
 use Forge\Model\Attribute\FormModelAttributes;
-use Forge\Model\Contract\FormModelContract;
 use Forge\Widget\AbstractWidget;
+use InvalidArgumentException;
 use ReflectionException;
 
 abstract class AbstractField extends AbstractWidget
 {
-    private null|string $label = '';
-    private array $labelAttributes = [];
-    private string $labelClass = '';
+    use FieldPart\Error;
+    use FieldPart\Hint;
+    use FieldPart\Label;
 
-    public function __construct(
-        protected FormModelContract $formModel,
-        protected string $fieldAttribute,
-    ) {
-    }
+    private bool $ariaDescribedBy = false;
+    private bool $container = true;
+    private string $template = '{label}{input}{hint}{error}';
+    private null|Widget $widget = null;
 
     /**
-     * Returns a new instance with the label attribute value is a string that defines the text of the label element.
+     * Return new instance with container enabled or disabled for the field.
      *
-     * @param string $value The value of the label attribute. If null, the label will not be rendered.
+     * @param bool $value True to enable container, false to disable.
      *
      * @return static
      */
-    public function label(string $value = null): static
+    public function container(bool $value): static
     {
         $new = clone $this;
-        $new->label = $value;
+        $new->container = $value;
+
+        return $new;
+    }
+
+    public function getContainer(): bool
+    {
+        return $this->container;
+    }
+
+    public function getWidget(): Widget
+    {
+        if (null === $this->widget) {
+            throw new InvalidArgumentException('Widget is not set.');
+        }
+
+        return $this->widget;
+    }
+
+    public function widget(Widget $value): static
+    {
+        $new = clone $this;
+        $new->widget = $value;
 
         return $new;
     }
 
     /**
-     * Returns a new instance with the label attributes is an array that defines the HTML attributes of the label
-     * element.
-     *
-     * @param array $values The Attribute values indexed by attribute names for field widget.
+     * @throws ReflectionException
      */
-    public function labelAttributes(array $values): static
+    private function renderError(): string
     {
-        $new = clone $this;
-        $new->labelAttributes = $values;
+        $errorAttributes = $this->errorAttributes;
+        $widget = $this->widget;
 
-        return $new;
+        return Base\Field\Error::create(construct: [$widget->getFormModel(), $widget->getAttribute()])
+            ->attributes($errorAttributes)
+            ->message($this->error)
+            ->messageCallback($this->errorCallback)
+            ->tag($this->errorTag)
+            ->render();
     }
 
     /**
-     * Returns a new instance with the label class is a string that defines the class of the label element.
-     *
-     * @param string $value The value of the class attribute.
-     *
-     * @return static
+     * @throws ReflectionException
      */
-    public function labelClass(string $value): static
+    private function renderHint(): string
     {
-        $new = clone $this;
-        $new->labelClass = $value;
+        $hintAttributes = $this->hintAttributes;
+        $widget = $this->getWidget();
 
-        return $new;
+        /** @var bool|string */
+        $ariaDescribedBy = $widget->attributes['aria-describedby'] ?? '';
+
+        if (is_bool($ariaDescribedBy) && $ariaDescribedBy === true) {
+            $id = $widget->getInputId() . '-help';
+            $widget->attributes['aria-describedby'] = $id;
+            $hintAttributes['id'] = $id;
+        }
+
+        if (is_string($ariaDescribedBy) && $ariaDescribedBy !== '') {
+            /** @var string */
+            $hintAttributes['id'] = $widget->attributes['aria-describedby'];
+        }
+
+        return Base\Field\Hint::create(construct: [$widget->getFormModel(), $widget->getAttribute()])
+            ->attributes($hintAttributes)
+            ->message($this->hint)
+            ->tag($this->hintTag)
+            ->render() . PHP_EOL;
     }
 
     /**
@@ -72,19 +109,55 @@ abstract class AbstractField extends AbstractWidget
     protected function renderLabel(): string
     {
         $labelAttributes = $this->labelAttributes;
-        $labelClass = $this->labelClass;
+        $widget = $this->getWidget();
 
         if (!array_key_exists('for', $labelAttributes)) {
-            $labelAttributes['for'] = FormModelAttributes::getInputId($this->formModel, $this->fieldAttribute);
+            $labelAttributes['for'] = $widget->getInputId();
         }
 
-        if ($labelClass !== '') {
-            CssClass::add($labelAttributes, $labelClass);
-        }
-
-        return Base\Field\Label::create(construct: [$this->formModel, $this->fieldAttribute])
+        return Base\Field\Label::create(construct: [$widget->getFormModel(), $widget->getAttribute()])
             ->attributes($labelAttributes)
             ->label($this->label)
             ->render() . PHP_EOL;
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    protected function renderInputWidget(): string
+    {
+        $errorTag = '';
+        $hintTag = '';
+        $inputTag = '';
+        $labelTag = '';
+
+        $widget = $this->getWidget();
+
+        if ($this->renderError() !== '') {
+            $errorTag = $this->renderError();
+        }
+
+        if ($this->renderHint() !== '') {
+            $hintTag = $this->renderHint() . PHP_EOL;
+        }
+
+        if ($widget->render() !== '') {
+            $inputTag = $widget->render() . PHP_EOL;
+        }
+
+        if ($this->renderLabel() !== '') {
+            $labelTag = $this->renderLabel() . PHP_EOL;
+        }
+
+        return preg_replace(
+            '/^\h*\v+/m',
+            '',
+            trim(
+                strtr(
+                    $this->template,
+                    ['{error}' => $errorTag, '{hint}' => $hintTag, '{input}' => $inputTag, '{label}' => $labelTag],
+                ),
+            ),
+        );
     }
 }

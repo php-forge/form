@@ -25,11 +25,11 @@ final class LabelAttributesTest extends TestCase
     /**
      * @throws ReflectionException
      */
-    public function testForId(): void
+    public function testFor(): void
     {
         $this->assertSame(
             '<label for="test.forId">Sam &amp; Dark</label>',
-            Label::create(construct: [new PropertyTypeForm(), 'string'])->forId('test.forId')->label('Sam & Dark')->render(),
+            Label::create(construct: [new PropertyTypeForm(), 'string'])->for('test.forId')->label('Sam & Dark')->render(),
         );
     }
 

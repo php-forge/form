@@ -34,7 +34,7 @@ final class Label extends Widget
      *
      * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/label.html#label.attrs.for
      */
-    public function forId(string $value): self
+    public function for(string $value): self
     {
         $new = clone $this;
         $new->attributes['for'] = $value;

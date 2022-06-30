@@ -17,7 +17,7 @@ final class ImmutabilityTest extends TestCase
     public function testImmutability(): void
     {
         $label = Label::create(construct: [new PropertyTypeForm(), 'string']);
-        $this->assertNotSame($label, $label->forId(''));
+        $this->assertNotSame($label, $label->for(''));
         $this->assertNotSame($label, $label->label('', false));
     }
 }
