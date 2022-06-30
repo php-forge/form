@@ -13,7 +13,7 @@ trait Hint
     private string $hintClass = '';
     private string $hintTag = 'div';
 
-        /**
+    /**
      * Returns a new instance with the hint text.
      *
      * @param string|null $value The hint text. If null, the hint will be removed.

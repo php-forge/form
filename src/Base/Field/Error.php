@@ -59,7 +59,6 @@ final class Error extends AbstractWidget
         return $new;
     }
 
-
     /**
      * Returns a new instance with the container tag name for the error.
      *
