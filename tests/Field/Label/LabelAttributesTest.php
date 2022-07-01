@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Forge\Form\Tests\Base\Field\Label;
+namespace Forge\Form\Tests\Field\Label;
 
-use Forge\Form\Base\Field\Label;
+use Forge\Form\Field\Label;
 use Forge\Form\Tests\Support\PropertyTypeForm;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;

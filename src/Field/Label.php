@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Forge\Form\Base\Field;
+namespace Forge\Form\Field;
 
 use Forge\Form\Base\Widget;
 use Forge\Form\Input\Base\Attribute\Form;

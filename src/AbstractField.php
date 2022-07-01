@@ -11,9 +11,9 @@ use ReflectionException;
 
 abstract class AbstractField extends AbstractWidget
 {
-    use FieldPart\Error;
-    use FieldPart\Hint;
-    use FieldPart\Label;
+    use Field\Trait\Error;
+    use Field\Trait\Hint;
+    use Field\Trait\Label;
 
     private bool|string $ariaDescribedBy = false;
     private bool $container = true;
@@ -69,7 +69,7 @@ abstract class AbstractField extends AbstractWidget
         $errorAttributes = $this->errorAttributes;
         $widget = $this->getWidget();
 
-        $errorTag = Base\Field\Error::create(construct: [$widget->getFormModel(), $widget->getAttribute()])
+        $errorTag = Field\Error::create(construct: [$widget->getFormModel(), $widget->getAttribute()])
             ->attributes($errorAttributes)
             ->message($this->error)
             ->tag($this->errorTag);
@@ -97,7 +97,7 @@ abstract class AbstractField extends AbstractWidget
             $hintAttributes['id'] = $this->ariaDescribedBy;
         }
 
-        return Base\Field\Hint::create(construct: [$widget->getFormModel(), $widget->getAttribute()])
+        return Field\Hint::create(construct: [$widget->getFormModel(), $widget->getAttribute()])
             ->attributes($hintAttributes)
             ->message($this->hint)
             ->tag($this->hintTag)
@@ -116,7 +116,7 @@ abstract class AbstractField extends AbstractWidget
             $labelAttributes['for'] = $widget->getInputId();
         }
 
-        return Base\Field\Label::create(construct: [$widget->getFormModel(), $widget->getAttribute()])
+        return Field\Label::create(construct: [$widget->getFormModel(), $widget->getAttribute()])
             ->attributes($labelAttributes)
             ->label($this->label)
             ->render();

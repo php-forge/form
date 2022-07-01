@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Forge\Form\Base\Field;
+namespace Forge\Form\Field;
 
 use Forge\Form\Exception\AttributeNotSet;
 use Forge\Html\Tag\Tag;

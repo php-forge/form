@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Forge\Form\Tests\Base\Field\Error;
+namespace Forge\Form\Tests\Field\Error;
 
-use Forge\Form\Base\Field\Error;
+use Forge\Form\Field\Error;
 use Forge\Form\Tests\Support\HintTypeForm;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;

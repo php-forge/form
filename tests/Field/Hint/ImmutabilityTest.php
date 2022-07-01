@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Forge\Form\Tests\Base\Field\Hint;
+namespace Forge\Form\Tests\Field\Hint;
 
-use Forge\Form\Base\Field\Hint;
+use Forge\Form\Field\Hint;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 

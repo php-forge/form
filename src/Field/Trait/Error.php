@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Forge\Form\FieldPart;
+namespace Forge\Form\Field\Trait;
 
 use Forge\Html\Helper\CssClass;
 
