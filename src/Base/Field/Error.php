@@ -54,7 +54,7 @@ final class Error extends AbstractWidget
     public function messageCallback(array $value): self
     {
         $new = clone $this;
-        $new->message = (string) call_user_func($value, $this->formModel, $this->attribute);
+        $new->message = (string) $value($this->formModel, $this->attribute);
 
         return $new;
     }
