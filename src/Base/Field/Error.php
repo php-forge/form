@@ -54,7 +54,7 @@ final class Error extends AbstractWidget
     public function messageCallback(array $value): self
     {
         $new = clone $this;
-        $new->messageCallback = $value;
+        $new->message = (string) call_user_func($value, $this->formModel, $this->attribute);
 
         return $new;
     }
@@ -87,13 +87,8 @@ final class Error extends AbstractWidget
             throw new InvalidArgumentException('Tag name cannot be empty.');
         }
 
-        if ($this->formModel instanceof FormModelContract && $message === '' && $this->messageCallback === []) {
+        if ('' === $message && $this->formModel instanceof FormModelContract) {
             $message = $this->formModel->error()->getFirst($this->attribute);
-        }
-
-        if ($this->formModel instanceof FormModelContract && $message === '' && $this->messageCallback !== []) {
-            /** @var string */
-            $message = call_user_func($this->messageCallback, $this->formModel, $this->attribute);
         }
 
         return match ($message !== null && $message !== '') {

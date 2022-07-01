@@ -40,11 +40,6 @@ abstract class Widget extends AbstractWidget
         return $this->formModel;
     }
 
-    public function getHint(): string
-    {
-        return FormModelAttributes::getHint($this->formModel, $this->attribute);
-    }
-
     public function getInputId(): string
     {
         return FormModelAttributes::getInputId($this->formModel, $this->attribute, $this->charset);
@@ -63,16 +58,6 @@ abstract class Widget extends AbstractWidget
     protected function getLabel(): string
     {
         return FormModelAttributes::getLabel($this->formModel, $this->attribute);
-    }
-
-    /**
-     * Generate placeholder attribute.
-     *
-     * @return string
-     */
-    protected function getPlaceHolder(): string
-    {
-        return FormModelAttributes::getPlaceHolder($this->formModel, $this->attribute);
     }
 
     protected function getShortNameClass(): string

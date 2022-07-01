@@ -17,6 +17,26 @@ final class CheckboxTest extends TestCase
     /**
      * @throws ReflectionException
      */
+    public function testAnyLabel(): void
+    {
+        $assert = new Assert();
+
+        $assert->equalsWithoutLE(
+            <<<HTML
+            <div>
+            <input id="propertytypeform-string" name="PropertyTypeForm[string]" type="checkbox">
+            </div>
+            HTML,
+            Field::create()
+                ->widget(Checkbox::create(construct: [new PropertyTypeForm(), 'string'])->label(null))
+                ->label(null)
+                ->render(),
+        );
+    }
+
+    /**
+     * @throws ReflectionException
+     */
     public function testAriaDescribedBy(): void
     {
         $assert = new Assert();
@@ -25,7 +45,7 @@ final class CheckboxTest extends TestCase
             <<<HTML
             <div>
             <label for="hinttypeform-string">String</label>
-            <input id="hinttypeform-string" name="HintTypeForm[string]" type="checkbox" aria-describedby="hinttypeform-string-help"> String
+            <input id="hinttypeform-string" name="HintTypeForm[string]" type="checkbox" aria-describedby="hinttypeform-string-help">
             <div id="hinttypeform-string-help">
             Hint for string
             </div>
@@ -40,7 +60,7 @@ final class CheckboxTest extends TestCase
             <<<HTML
             <div>
             <label for="hinttypeform-string">String</label>
-            <input id="hinttypeform-string" name="HintTypeForm[string]" type="checkbox" aria-describedby="test.ariaDescribedBy"> String
+            <input id="hinttypeform-string" name="HintTypeForm[string]" type="checkbox" aria-describedby="test.ariaDescribedBy">
             <div id="test.ariaDescribedBy">
             Hint for string
             </div>
@@ -65,7 +85,7 @@ final class CheckboxTest extends TestCase
             <<<HTML
             <div>
             <label for="hinttypeform-string">String</label>
-            <input id="hinttypeform-string" name="HintTypeForm[string]" type="checkbox"> String
+            <input id="hinttypeform-string" name="HintTypeForm[string]" type="checkbox">
             <div>
             Hint for string
             </div>
@@ -92,7 +112,7 @@ final class CheckboxTest extends TestCase
             <<<HTML
             <div>
             <label for="hinttypeform-string">String</label>
-            <input id="hinttypeform-string" name="HintTypeForm[string]" type="checkbox"> String
+            <input id="hinttypeform-string" name="HintTypeForm[string]" type="checkbox">
             <div>
             Hint for string
             </div>
@@ -123,7 +143,7 @@ final class CheckboxTest extends TestCase
             <<<HTML
             <div>
             <label for="hinttypeform-string">String</label>
-            <input id="hinttypeform-string" name="HintTypeForm[string]" type="checkbox"> String
+            <input id="hinttypeform-string" name="HintTypeForm[string]" type="checkbox">
             <div>
             Hint for string
             </div>
@@ -150,7 +170,7 @@ final class CheckboxTest extends TestCase
             <<<HTML
             <div>
             <label for="hinttypeform-string">String</label>
-            <input id="hinttypeform-string" name="HintTypeForm[string]" type="checkbox"> String
+            <input id="hinttypeform-string" name="HintTypeForm[string]" type="checkbox">
             <div>
             Hint for string
             </div>
@@ -173,7 +193,7 @@ final class CheckboxTest extends TestCase
             <<<HTML
             <div>
             <label for="hinttypeform-string">String</label>
-            <input id="hinttypeform-string" name="HintTypeForm[string]" type="checkbox"> String
+            <input id="hinttypeform-string" name="HintTypeForm[string]" type="checkbox">
             <article class="test.hint test.hint-1">
             Custom hint for string
             </article>
@@ -200,7 +220,7 @@ final class CheckboxTest extends TestCase
             <<<HTML
             <div>
             <label for="hinttypeform-string">Label for string</label>
-            <input id="hinttypeform-string" name="HintTypeForm[string]" type="checkbox"> String
+            <input id="hinttypeform-string" name="HintTypeForm[string]" type="checkbox">
             <div>
             Hint for string
             </div>
@@ -224,7 +244,7 @@ final class CheckboxTest extends TestCase
             <<<HTML
             <div>
             <label class="test.label test.label-1" for="hinttypeform-string">Label for string</label>
-            <input id="hinttypeform-string" name="HintTypeForm[string]" type="checkbox"> String
+            <input id="hinttypeform-string" name="HintTypeForm[string]" type="checkbox">
             <div>
             Hint for string
             </div>
@@ -250,7 +270,7 @@ final class CheckboxTest extends TestCase
             <<<HTML
             <div>
             <label for="propertytypeform-bool">Bool</label>
-            <input id="propertytypeform-bool" name="PropertyTypeForm[bool]" type="checkbox"> Bool
+            <input id="propertytypeform-bool" name="PropertyTypeForm[bool]" type="checkbox">
             </div>
             HTML,
             Field::create()
@@ -269,7 +289,7 @@ final class CheckboxTest extends TestCase
         $assert->equalsWithoutLE(
             <<<HTML
             <label for="hinttypeform-string">String</label>
-            <input id="hinttypeform-string" name="HintTypeForm[string]" type="checkbox"> String
+            <input id="hinttypeform-string" name="HintTypeForm[string]" type="checkbox">
             <div>
             Hint for string
             </div>
@@ -277,6 +297,27 @@ final class CheckboxTest extends TestCase
             Field::create()
                 ->container(false)
                 ->widget(Checkbox::create(construct: [new HintTypeForm(), 'string']))
+                ->render()
+        );
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function testWithoutHint(): void
+    {
+        $assert = new Assert();
+
+        $assert->equalsWithoutLE(
+            <<<HTML
+            <div>
+            <label for="hinttypeform-string">String</label>
+            <input id="hinttypeform-string" name="HintTypeForm[string]" type="checkbox">
+            </div>
+            HTML,
+            Field::create()
+                ->widget(Checkbox::create(construct: [new HintTypeForm(), 'string']))
+                ->hint(null)
                 ->render()
         );
     }

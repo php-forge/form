@@ -27,6 +27,6 @@ final class Field extends AbstractField
      */
     protected function run(): string
     {
-        return $this->getContainer() ? Tag::create('div', $this->renderInputWidget(), []) : $this->renderInputWidget();
+        return $this->getContainer() ? Tag::create('div', $this->renderWidget(), []) : $this->renderWidget();
     }
 }

@@ -20,6 +20,7 @@ final class InmutabilityGlobalsTest extends TestCase
         $globals = $this->createWidget(new PropertyTypeForm(), 'string');
         $this->assertNotSame($globals, $globals->autofocus());
         $this->assertNotSame($globals, $globals->class(''));
+        $this->assertNotSame($globals, $globals->charset(''));
         $this->assertNotSame($globals, $globals->id(''));
         $this->assertNotSame($globals, $globals->name(''));
         $this->assertNotSame($globals, $globals->tabindex(0));

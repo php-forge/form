@@ -15,8 +15,9 @@ abstract class AbstractField extends AbstractWidget
     use FieldPart\Hint;
     use FieldPart\Label;
 
-    private bool $ariaDescribedBy = false;
+    private bool|string $ariaDescribedBy = false;
     private bool $container = true;
+    private string $inputId = '';
     private string $template = '{label}{input}{hint}{error}';
     private null|Widget $widget = null;
 
@@ -52,6 +53,9 @@ abstract class AbstractField extends AbstractWidget
     public function widget(Widget $value): static
     {
         $new = clone $this;
+        /** @var string */
+        $new->ariaDescribedBy = $value->attributes['aria-describedby'] ?? '';
+        $new->inputId = $value->getInputId();
         $new->widget = $value;
 
         return $new;
@@ -65,12 +69,16 @@ abstract class AbstractField extends AbstractWidget
         $errorAttributes = $this->errorAttributes;
         $widget = $this->getWidget();
 
-        return Base\Field\Error::create(construct: [$widget->getFormModel(), $widget->getAttribute()])
+        $errorTag = Base\Field\Error::create(construct: [$widget->getFormModel(), $widget->getAttribute()])
             ->attributes($errorAttributes)
             ->message($this->error)
-            ->messageCallback($this->errorCallback)
-            ->tag($this->errorTag)
-            ->render();
+            ->tag($this->errorTag);
+
+        if (is_callable($this->errorCallback)) {
+            $errorTag = $errorTag->messageCallback($this->errorCallback);
+        }
+
+        return $errorTag->render();
     }
 
     /**
@@ -81,18 +89,12 @@ abstract class AbstractField extends AbstractWidget
         $hintAttributes = $this->hintAttributes;
         $widget = $this->getWidget();
 
-        /** @var bool|string */
-        $ariaDescribedBy = $widget->attributes['aria-describedby'] ?? '';
-
-        if (is_bool($ariaDescribedBy) && $ariaDescribedBy === true) {
-            $id = $widget->getInputId() . '-help';
-            $widget->attributes['aria-describedby'] = $id;
-            $hintAttributes['id'] = $id;
+        if (is_bool($this->ariaDescribedBy) && $this->ariaDescribedBy === true) {
+            $hintAttributes['id'] = $this->inputId . '-help';
         }
 
-        if (is_string($ariaDescribedBy) && $ariaDescribedBy !== '') {
-            /** @var string */
-            $hintAttributes['id'] = $widget->attributes['aria-describedby'];
+        if (is_string($this->ariaDescribedBy) && $this->ariaDescribedBy !== '') {
+            $hintAttributes['id'] = $this->ariaDescribedBy;
         }
 
         return Base\Field\Hint::create(construct: [$widget->getFormModel(), $widget->getAttribute()])
@@ -117,13 +119,13 @@ abstract class AbstractField extends AbstractWidget
         return Base\Field\Label::create(construct: [$widget->getFormModel(), $widget->getAttribute()])
             ->attributes($labelAttributes)
             ->label($this->label)
-            ->render() . PHP_EOL;
+            ->render();
     }
 
     /**
      * @throws ReflectionException
      */
-    protected function renderInputWidget(): string
+    protected function renderWidget(): string
     {
         $errorTag = '';
         $hintTag = '';
@@ -131,6 +133,14 @@ abstract class AbstractField extends AbstractWidget
         $labelTag = '';
 
         $widget = $this->getWidget();
+
+        if (is_bool($this->ariaDescribedBy) && $this->ariaDescribedBy === true) {
+            $widget = $widget->attributes(['aria-describedby' => $this->inputId . '-help']);
+        }
+
+        if ($widget instanceof Input\Checkbox && null !== $this->label) {
+            $widget = $widget->label(null);
+        }
 
         if ($this->renderError() !== '') {
             $errorTag = $this->renderError();
