@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Forge\Form;
 
-use Forge\Form\Base\Widget;
+use Forge\Form\Input\Base\InputInterface;
 use Forge\Widget\AbstractWidget;
 use InvalidArgumentException;
 use ReflectionException;
@@ -19,7 +19,7 @@ abstract class AbstractField extends AbstractWidget
     private bool $container = true;
     private string $inputId = '';
     private string $template = '{label}{input}{hint}{error}';
-    private null|Widget $widget = null;
+    private null|AbstractWidget $widget = null;
 
     /**
      * Return new instance with container enabled or disabled for the field.
@@ -41,7 +41,7 @@ abstract class AbstractField extends AbstractWidget
         return $this->container;
     }
 
-    public function getWidget(): Widget
+    public function getWidget(): AbstractWidget
     {
         if (null === $this->widget) {
             throw new InvalidArgumentException('Widget is not set.');
@@ -50,12 +50,13 @@ abstract class AbstractField extends AbstractWidget
         return $this->widget;
     }
 
-    public function widget(Widget $value): static
+    public function widget(AbstractWidget $value): static
     {
         $new = clone $this;
         /** @var string */
+
         $new->ariaDescribedBy = $value->attributes['aria-describedby'] ?? '';
-        $new->inputId = $value->getInputId();
+        $new->inputId = $value instanceof InputInterface ? $value->getInputId() : '';
         $new->widget = $value;
 
         return $new;
@@ -138,23 +139,23 @@ abstract class AbstractField extends AbstractWidget
             $widget = $widget->attributes(['aria-describedby' => $this->inputId . '-help']);
         }
 
-        if ($widget instanceof Input\Checkbox && null !== $this->label) {
+        if (($widget instanceof Input\Checkbox || $widget instanceof Input\Radio) && null !== $this->label) {
             $widget = $widget->label(null);
         }
 
-        if ($this->renderError() !== '') {
+        if ($widget instanceof InputInterface && '' !== $this->renderError()) {
             $errorTag = $this->renderError();
         }
 
-        if ($this->renderHint() !== '') {
+        if ($widget instanceof InputInterface && '' !== $this->renderHint()) {
             $hintTag = $this->renderHint() . PHP_EOL;
         }
 
-        if ($widget->render() !== '') {
+        if ('' !== $widget->render()) {
             $inputTag = $widget->render() . PHP_EOL;
         }
 
-        if ($this->renderLabel() !== '') {
+        if ($widget instanceof InputInterface && '' !== $this->renderLabel()) {
             $labelTag = $this->renderLabel() . PHP_EOL;
         }
 

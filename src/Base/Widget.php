@@ -22,17 +22,22 @@ abstract class Widget extends AbstractWidget
         }
     }
 
-    public function getAttribute(): string
-    {
-        return $this->attribute;
-    }
-
     public function charset(string $value): self
     {
         $new = clone $this;
         $new->charset = $value;
 
         return $new;
+    }
+
+    public function getAttribute(): string
+    {
+        return $this->attribute;
+    }
+
+    public function getCharset(): string
+    {
+        return $this->charset;
     }
 
     public function getFormModel(): FormModelContract
@@ -42,22 +47,12 @@ abstract class Widget extends AbstractWidget
 
     public function getInputId(): string
     {
-        return FormModelAttributes::getInputId($this->formModel, $this->attribute, $this->charset);
+        return FormModelAttributes::getInputId($this->getFormModel(), $this->getAttribute(), $this->getCharSet());
     }
 
     protected function getInputName(): string
     {
-        return FormModelAttributes::getInputName($this->formModel, $this->attribute);
-    }
-
-    /**
-     * Generate label attribute.
-     *
-     * @return string
-     */
-    protected function getLabel(): string
-    {
-        return FormModelAttributes::getLabel($this->formModel, $this->attribute);
+        return FormModelAttributes::getInputName($this->getFormModel(), $this->getAttribute());
     }
 
     protected function getShortNameClass(): string
@@ -65,14 +60,9 @@ abstract class Widget extends AbstractWidget
         return strrchr(static::class, '\\') . '::class';
     }
 
-    /**
-     * Return value of attribute.
-     *
-     * @return mixed
-     */
     protected function getValue(): mixed
     {
-        return FormModelAttributes::getValue($this->formModel, $this->attribute);
+        return FormModelAttributes::getValue($this->getFormModel(), $this->getAttribute());
     }
 
     /**
@@ -82,7 +72,7 @@ abstract class Widget extends AbstractWidget
      */
     protected function hasError(): bool
     {
-        return $this->formModel->error()->has($this->attribute);
+        return $this->getFormModel()->error()->has($this->getAttribute());
     }
 
     /**
@@ -98,6 +88,6 @@ abstract class Widget extends AbstractWidget
      */
     private function isEmpty(): bool
     {
-        return $this->formModel->isEmpty();
+        return $this->getFormModel()->isEmpty();
     }
 }

@@ -8,6 +8,7 @@ use Forge\Form\Base\Widget;
 use Forge\Form\Input\Base\Attribute\Form;
 use Forge\Html\Helper\Encode;
 use Forge\Html\Tag\Tag;
+use Forge\Model\Attribute\FormModelAttributes;
 
 /**
  * The label element represents a caption for a form control.
@@ -79,5 +80,10 @@ final class Label extends Widget
             null => '',
             default => Tag::create('label', $label, $attributes),
         };
+    }
+
+    protected function getLabel(): string
+    {
+        return FormModelAttributes::getLabel($this->getFormModel(), $this->getAttribute());
     }
 }

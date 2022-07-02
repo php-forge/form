@@ -12,7 +12,7 @@ use Forge\Html\Tag\Tag;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.html
  */
-abstract class Input extends Widget
+abstract class Input extends Widget implements InputInterface
 {
     use Attribute\AriaDescribedBy;
     use Attribute\AriaLabel;
