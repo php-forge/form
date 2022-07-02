@@ -6,8 +6,6 @@ namespace Forge\Form\Tests\Field;
 
 use Forge\Form\Field;
 use Forge\Form\Input\Button;
-use Forge\Form\Tests\Support\HintTypeForm;
-use Forge\Form\Tests\Support\PropertyTypeForm;
 use Forge\TestUtils\Assert;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
