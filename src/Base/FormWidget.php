@@ -55,6 +55,11 @@ abstract class FormWidget extends AbstractWidget implements FormWidgetInterface
         return FormModelAttributes::getInputName($this->getFormModel(), $this->getAttribute());
     }
 
+    protected function getLabel(): string
+    {
+        return FormModelAttributes::getLabel($this->getFormModel(), $this->getAttribute());
+    }
+
     protected function getShortNameClass(): string
     {
         return strrchr(static::class, '\\') . '::class';
