@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Forge\Form;
 
-use Forge\Form\Input\Base\InputInterface;
+use Forge\Form\Base\FormWidgetInterface;
 use Forge\Widget\AbstractWidget;
 use InvalidArgumentException;
 use ReflectionException;
@@ -56,7 +56,7 @@ abstract class AbstractField extends AbstractWidget
         /** @var string */
 
         $new->ariaDescribedBy = $value->attributes['aria-describedby'] ?? '';
-        $new->inputId = $value instanceof InputInterface ? $value->getInputId() : '';
+        $new->inputId = $value instanceof FormWidgetInterface ? $value->getInputId() : '';
         $new->widget = $value;
 
         return $new;
@@ -65,10 +65,9 @@ abstract class AbstractField extends AbstractWidget
     /**
      * @throws ReflectionException
      */
-    private function renderError(): string
+    private function renderError(FormWidgetInterface $widget): string
     {
         $errorAttributes = $this->errorAttributes;
-        $widget = $this->getWidget();
 
         $errorTag = Field\Error::create(construct: [$widget->getFormModel(), $widget->getAttribute()])
             ->attributes($errorAttributes)
@@ -85,10 +84,9 @@ abstract class AbstractField extends AbstractWidget
     /**
      * @throws ReflectionException
      */
-    private function renderHint(): string
+    private function renderHint(FormWidgetInterface $widget): string
     {
         $hintAttributes = $this->hintAttributes;
-        $widget = $this->getWidget();
 
         if (is_bool($this->ariaDescribedBy) && $this->ariaDescribedBy === true) {
             $hintAttributes['id'] = $this->inputId . '-help';
@@ -108,10 +106,9 @@ abstract class AbstractField extends AbstractWidget
     /**
      * @throws ReflectionException
      */
-    protected function renderLabel(): string
+    protected function renderLabel(FormWidgetInterface $widget): string
     {
         $labelAttributes = $this->labelAttributes;
-        $widget = $this->getWidget();
 
         if (!array_key_exists('for', $labelAttributes)) {
             $labelAttributes['for'] = $widget->getInputId();
@@ -143,20 +140,20 @@ abstract class AbstractField extends AbstractWidget
             $widget = $widget->label(null);
         }
 
-        if ($widget instanceof InputInterface && '' !== $this->renderError()) {
-            $errorTag = $this->renderError();
+        if ($widget instanceof FormWidgetInterface && $widget instanceof Input\Hidden === false) {
+            $errorTag = $this->renderError($widget);
         }
 
-        if ($widget instanceof InputInterface && '' !== $this->renderHint()) {
-            $hintTag = $this->renderHint() . PHP_EOL;
+        if ($widget instanceof FormWidgetInterface && $widget instanceof Input\Hidden === false) {
+            $hintTag = $this->renderHint($widget) . PHP_EOL;
         }
 
         if ('' !== $widget->render()) {
             $inputTag = $widget->render() . PHP_EOL;
         }
 
-        if ($widget instanceof InputInterface && '' !== $this->renderLabel()) {
-            $labelTag = $this->renderLabel() . PHP_EOL;
+        if ($widget instanceof FormWidgetInterface && $widget instanceof Input\Hidden === false) {
+            $labelTag = $this->renderLabel($widget) . PHP_EOL;
         }
 
         return preg_replace(

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Forge\Form\Field;
 
-use Forge\Form\Base\Widget;
+use Forge\Form\Base\FormWidget;
 use Forge\Form\Input\Base\Attribute\Form;
 use Forge\Html\Helper\Encode;
 use Forge\Html\Tag\Tag;
@@ -15,7 +15,7 @@ use Forge\Model\Attribute\FormModelAttributes;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/label.html
  */
-final class Label extends Widget
+final class Label extends FormWidget
 {
     use Form;
 

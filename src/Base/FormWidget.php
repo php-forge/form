@@ -9,7 +9,7 @@ use Forge\Model\Attribute\FormModelAttributes;
 use Forge\Model\Contract\FormModelContract;
 use Forge\Widget\AbstractWidget;
 
-abstract class Widget extends AbstractWidget
+abstract class FormWidget extends AbstractWidget implements FormWidgetInterface
 {
     use Globals;
 
@@ -22,7 +22,7 @@ abstract class Widget extends AbstractWidget
         }
     }
 
-    public function charset(string $value): self
+    public function charset(string $value): static
     {
         $new = clone $this;
         $new->charset = $value;

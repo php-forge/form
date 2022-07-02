@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Forge\Form\Tests\Base;
 
-use Forge\Form\Base\Widget;
+use Forge\Form\Base\FormWidget;
 use Forge\Form\Tests\Support\PropertyTypeForm;
 use Forge\Model\Contract\FormModelContract;
 use PHPUnit\Framework\TestCase;
@@ -27,9 +27,9 @@ final class InmutabilityGlobalsTest extends TestCase
         $this->assertNotSame($globals, $globals->title(''));
     }
 
-    private function createWidget(FormModelContract $formModel, string $fieldAttributes): Widget
+    private function createWidget(FormModelContract $formModel, string $fieldAttributes): FormWidget
     {
-        return new class ($formModel, $fieldAttributes) extends Widget {
+        return new class ($formModel, $fieldAttributes) extends FormWidget {
             protected function run(): string
             {
                 return '';

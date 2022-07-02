@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Forge\Form\Input\Base;
 
-use Forge\Form\Base\Widget;
+use Forge\Form\Base\FormWidget;
 use Forge\Html\Tag\Tag;
 
 /**
@@ -12,7 +12,7 @@ use Forge\Html\Tag\Tag;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.html
  */
-abstract class Input extends Widget implements InputInterface
+abstract class Input extends FormWidget
 {
     use Attribute\AriaDescribedBy;
     use Attribute\AriaLabel;

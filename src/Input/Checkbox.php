@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Forge\Form\Input;
 
-use Forge\Form\Base\Widget;
+use Forge\Form\Base\FormWidget;
 use InvalidArgumentException;
 
 use function ucfirst;
@@ -19,7 +19,7 @@ final class Checkbox extends Base\Input
     use Base\Attribute\Checked;
 
     private null|string $label = '';
-    private Widget|null $hidden = null;
+    private FormWidget|null $hidden = null;
 
     public function label(null|string $value): self
     {

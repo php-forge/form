@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Forge\Form\Input;
 
-use Forge\Form\Base\Widget;
+use Forge\Form\Base\FormWidget;
 use Forge\Html\Tag\Tag;
 use InvalidArgumentException;
 
@@ -16,7 +16,7 @@ use function is_string;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.hidden.html#input.hidden.attrs.value
  */
-final class Hidden extends Widget
+final class Hidden extends FormWidget
 {
     use Base\Attribute\Disabled;
     use Base\Attribute\Form;

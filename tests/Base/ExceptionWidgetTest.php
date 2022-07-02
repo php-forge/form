@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Forge\Form\Tests\Widget;
 
-use Forge\Form\Base\Widget;
+use Forge\Form\Base\FormWidget;
 use Forge\Form\Exception\AttributeNotSet;
 use Forge\Form\Tests\Support\PropertyTypeForm;
 use Forge\Model\Contract\FormModelContract;
@@ -33,9 +33,9 @@ final class ExceptionWidgetTest extends TestCase
         $widget = $this->widget(new PropertyTypeForm(), 'noExist');
     }
 
-    private function widget(FormModelContract $formModel, string $fieldAttributes): Widget
+    private function widget(FormModelContract $formModel, string $fieldAttributes): FormWidget
     {
-        return new class ($formModel, $fieldAttributes) extends Widget {
+        return new class ($formModel, $fieldAttributes) extends FormWidget {
             protected function run(): string
             {
                 return '';
