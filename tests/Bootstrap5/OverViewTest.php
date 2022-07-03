@@ -29,7 +29,7 @@ use ReflectionException;
  *
  * @link https://getbootstrap.com/docs/5.2/forms/overview/#overview
  */
-final class OverviewTest extends TestCase
+final class OverViewTest extends TestCase
 {
     /**
      * Add the disabled boolean attribute on an input to prevent user interactions and make it appear lighter.
