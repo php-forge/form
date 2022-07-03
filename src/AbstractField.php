@@ -253,7 +253,7 @@ abstract class AbstractField extends AbstractWidget
         }
 
         if ('' !== $this->class) {
-            $widget = $widget->class($this->class);
+            CssClass::add($widget->attributes, $this->class);
         }
 
         if (($widget instanceof Input\Checkbox || $widget instanceof Input\Radio) && null !== $this->label) {

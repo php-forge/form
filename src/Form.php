@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Forge\Form;
 
 use Forge\Form\Input\Hidden;
+use Forge\Html\Helper\CssClass;
 use Forge\Html\Tag\Tag;
 use Forge\Widget\AbstractWidget;
 use InvalidArgumentException;
@@ -81,7 +82,7 @@ final class Form extends AbstractWidget
         }
 
         if ('' !== $this->csrfToken) {
-            $attributes[$this->csrfName] = (string) $this->csrfToken;
+            $attributes[$this->csrfName] = $this->csrfToken;
         }
 
         $form = Tag::begin('form', $attributes);
@@ -175,7 +176,8 @@ final class Form extends AbstractWidget
     public function class(string $class): self
     {
         $new = clone $this;
-        Html::addCssClass($new->attributes, $class);
+        CssClass::add($new->attributes, $class);
+
         return $new;
     }
 
@@ -192,6 +194,7 @@ final class Form extends AbstractWidget
     {
         $new = clone $this;
         $new->attributes['id'] = $value;
+
         return $new;
     }
 
@@ -208,6 +211,7 @@ final class Form extends AbstractWidget
     {
         $new = clone $this;
         $new->attributes['id'] = $id;
+
         return $new;
     }
 
