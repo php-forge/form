@@ -186,7 +186,7 @@ final class OverViewTest extends TestCase
                     ->class('form-check-input')
                     ->containerClass('form-check')
                     ->labelAttributes(['class' => 'form-check-label'])
-                    ->template('{input}{label}{hint}{error}') .  PHP_EOL .
+                    ->template('{input}{label}{hint}{error}') . PHP_EOL .
                 $field->widget(Submit::create()->class('btn btn-primary'))->container(false) . PHP_EOL .
             Form::end()
         );
