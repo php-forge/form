@@ -11,6 +11,8 @@ trait Hint
     private null|string $hint = '';
     private array $hintAttributes = [];
     private string $hintClass = '';
+    private bool $hintContainer = false;
+    private array $hintContainerAttributes = [];
     private string $hintTag = 'div';
 
     /**
@@ -58,6 +60,51 @@ trait Hint
     {
         $new = clone $this;
         CssClass::add($new->hintAttributes, $value);
+
+        return $new;
+    }
+
+    /**
+     * Returns a new instance with the hint container enabled or disabled.
+     *
+     * @param bool $value True to enable container, false to disable.
+     *
+     * @return static
+     */
+    public function hintContainer(bool $value): static
+    {
+        $new = clone $this;
+        $new->hintContainer = $value;
+
+        return $new;
+    }
+
+    /**
+     * Returns a new instance with the HTML container attributes.
+     *
+     * @param array $values Attribute values indexed by attribute names.
+     *
+     * @return static
+     */
+    public function hintContainerAttributes(array $values = []): static
+    {
+        $new = clone $this;
+        $new->hintContainerAttributes = $values;
+
+        return $new;
+    }
+
+    /**
+     * Returns a new instance with add css class to the container.
+     *
+     * @param string $value The css class name.
+     *
+     * @return static
+     */
+    public function hintContainerClass(string $value): static
+    {
+        $new = clone $this;
+        CssClass::add($new->hintContainerAttributes, $value);
 
         return $new;
     }

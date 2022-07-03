@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Forge\Form;
 
 use Forge\Form\Base\FormWidgetInterface;
+use Forge\Html\Helper\CssClass;
+use Forge\Html\Tag\Tag;
 use Forge\Widget\AbstractWidget;
 use InvalidArgumentException;
 use ReflectionException;
@@ -16,10 +18,29 @@ abstract class AbstractField extends AbstractWidget
     use Field\Trait\Label;
 
     private bool|string $ariaDescribedBy = false;
+    private string $class = '';
     private bool $container = true;
+    private array $containerAttributes = [];
+    private bool $inputContainer = false;
+    private array $inputContainerAttributes = [];
     private string $inputId = '';
     private string $template = '{label}{input}{hint}{error}';
     private null|AbstractWidget $widget = null;
+
+    /**
+     * Return new instance with css class to add to the field.
+     *
+     * @param string $value The css class to add to the input element.
+     *
+     * @return static
+     */
+    public function class(string $value): static
+    {
+        $new = clone $this;
+        $new->class = $value;
+
+        return $new;
+    }
 
     /**
      * Return new instance with container enabled or disabled for the field.
@@ -36,9 +57,44 @@ abstract class AbstractField extends AbstractWidget
         return $new;
     }
 
+    /**
+     * Returns a new instance with the HTML container attributes.
+     *
+     * @param array $values Attribute values indexed by attribute names.
+     *
+     * @return static
+     */
+    public function containerAttributes(array $values = []): static
+    {
+        $new = clone $this;
+        $new->containerAttributes = $values;
+
+        return $new;
+    }
+
+    /**
+     * Returns a new instance with add css class to the container.
+     *
+     * @param string $value The css class name.
+     *
+     * @return static
+     */
+    public function containerClass(string $value): static
+    {
+        $new = clone $this;
+        CssClass::add($new->containerAttributes, $value);
+
+        return $new;
+    }
+
     public function getContainer(): bool
     {
         return $this->container;
+    }
+
+    public function getContainerAttributes(): array
+    {
+        return $this->containerAttributes;
     }
 
     public function getWidget(): AbstractWidget
@@ -48,6 +104,66 @@ abstract class AbstractField extends AbstractWidget
         }
 
         return $this->widget;
+    }
+
+    /**
+     * Return new instance with input container enabled or disabled for the field.
+     *
+     * @param bool $value True to enable input container, false to disable.
+     *
+     * @return static
+     */
+    public function inputContainer(bool $value): static
+    {
+        $new = clone $this;
+        $new->inputContainer = $value;
+
+        return $new;
+    }
+
+    /**
+     * Returns a new instance with the HTML container attributes.
+     *
+     * @param array $values Attribute values indexed by attribute names.
+     *
+     * @return static
+     */
+    public function inputContainerAttributes(array $values = []): static
+    {
+        $new = clone $this;
+        $new->inputContainerAttributes = $values;
+
+        return $new;
+    }
+
+    /**
+     * Returns a new instance with add css class to the input container.
+     *
+     * @param string $value The css class name.
+     *
+     * @return static
+     */
+    public function inputContainerClass(string $value): static
+    {
+        $new = clone $this;
+        CssClass::add($new->inputContainerAttributes, $value);
+
+        return $new;
+    }
+
+    /**
+     * Return new instance with the template field layout.
+     *
+     * @param string $value The template field.
+     *
+     * @return static
+     */
+    public function template(string $value): static
+    {
+        $new = clone $this;
+        $new->template = $value;
+
+        return $new;
     }
 
     public function widget(AbstractWidget $value): static
@@ -136,6 +252,10 @@ abstract class AbstractField extends AbstractWidget
             $widget = $widget->attributes(['aria-describedby' => $this->inputId . '-help']);
         }
 
+        if ('' !== $this->class) {
+            CssClass::add($widget->attributes, $this->class);
+        }
+
         if (($widget instanceof Input\Checkbox || $widget instanceof Input\Radio) && null !== $this->label) {
             $widget = $widget->label(null);
         }
@@ -145,15 +265,29 @@ abstract class AbstractField extends AbstractWidget
         }
 
         if ($widget instanceof FormWidgetInterface && $widget instanceof Input\Hidden === false) {
-            $hintTag = $this->renderHint($widget) . PHP_EOL;
+            $hintContent = $this->renderHint($widget) . PHP_EOL;
+            $hintTag = match ($this->hintContainer) {
+                true => Tag::create('div', $hintContent, $this->hintContainerAttributes) . PHP_EOL,
+                false => $hintContent . PHP_EOL,
+            };
         }
 
-        if ('' !== $widget->render()) {
-            $inputTag = $widget->render() . PHP_EOL;
+        $widgetContent = $widget->render();
+
+        if ('' !== $widgetContent) {
+            $inputTag = match ($this->inputContainer) {
+                true => Tag::create('div', $widgetContent . PHP_EOL, $this->inputContainerAttributes) . PHP_EOL,
+                false => $widgetContent . PHP_EOL,
+            };
         }
 
         if ($widget instanceof FormWidgetInterface && $widget instanceof Input\Hidden === false) {
-            $labelTag = $this->renderLabel($widget) . PHP_EOL;
+            $labelContent = $this->renderLabel($widget) . PHP_EOL;
+
+            $labelTag = match ($this->labelContainer) {
+                true => Tag::create('div', $labelContent, $this->labelContainerAttributes) . PHP_EOL,
+                false => $labelContent,
+            };
         }
 
         return preg_replace(

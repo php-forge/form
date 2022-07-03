@@ -6,9 +6,6 @@ namespace Forge\Form\Tests\Support;
 
 use Forge\Model\FormModel;
 
-/**
- * @link https://www.php.net/manual/es/language.types.declarations.php
- */
 final class PropertyTypeForm extends FormModel
 {
     private ?array $array = [];
