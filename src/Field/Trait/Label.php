@@ -11,6 +11,8 @@ trait Label
     private null|string $label = '';
     private array $labelAttributes = [];
     private string $labelClass = '';
+    private bool $labelContainer = false;
+    private array $labelContainerAttributes = [];
 
     /**
      * Returns a new instance with the label attribute value is a string that defines the text of the label element.
@@ -52,6 +54,51 @@ trait Label
     {
         $new = clone $this;
         CssClass::add($new->labelAttributes, $value);
+
+        return $new;
+    }
+
+    /**
+     * Return new instance with container enabled or disabled for the label.
+     *
+     * @param bool $value True to enable container, false to disable.
+     *
+     * @return static
+     */
+    public function labelContainer(bool $value): static
+    {
+        $new = clone $this;
+        $new->labelContainer = $value;
+
+        return $new;
+    }
+
+    /**
+     * Returns a new instance with the HTML container attributes.
+     *
+     * @param array $values Attribute values indexed by attribute names.
+     *
+     * @return static
+     */
+    public function labelContainerAttributes(array $values = []): static
+    {
+        $new = clone $this;
+        $new->labelContainerAttributes = $values;
+
+        return $new;
+    }
+
+    /**
+     * Returns a new instance with add css class to the container.
+     *
+     * @param string $value The css class name.
+     *
+     * @return static
+     */
+    public function labelContainerClass(string $value): static
+    {
+        $new = clone $this;
+        CssClass::add($new->labelContainerAttributes, $value);
 
         return $new;
     }
