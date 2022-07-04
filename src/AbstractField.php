@@ -31,7 +31,6 @@ abstract class AbstractField extends AbstractWidget
     private string $template = '{label}' . PHP_EOL . '{input}' . PHP_EOL . '{hint}' . PHP_EOL . '{error}';
     private null|AbstractWidget $widget = null;
 
-
     /**
      * Return new instance with after input html content.
      *
@@ -61,7 +60,6 @@ abstract class AbstractField extends AbstractWidget
 
         return $new;
     }
-
 
     /**
      * Return new instance with css class to add to the field.

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Forge\Form\Tests\Bootstrap5;
 
 use Forge\Form\Field;
-use Forge\Form\Form;
 use Forge\Form\Input\Text;
 use Forge\Form\Tests\Support\BasicForm;
 use Forge\TestUtils\Assert;
