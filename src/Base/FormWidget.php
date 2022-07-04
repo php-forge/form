@@ -35,6 +35,11 @@ abstract class FormWidget extends AbstractWidget implements FormWidgetInterface
         return $this->attribute;
     }
 
+    public function getAttributesValue(string $value): mixed
+    {
+        return $this->attributes[$value] ?? null;
+    }
+
     public function getCharset(): string
     {
         return $this->charset;

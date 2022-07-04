@@ -12,6 +12,8 @@ interface FormWidgetInterface
 
     public function getAttribute(): string;
 
+    public function getAttributesValue(string $value): mixed;
+
     public function getCharset(): string;
 
     public function getFormModel(): FormModelContract;

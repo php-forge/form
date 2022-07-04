@@ -10,6 +10,7 @@ use Forge\Html\Tag\Tag;
 use Forge\Widget\AbstractWidget;
 use InvalidArgumentException;
 use ReflectionException;
+use Stringable;
 
 abstract class AbstractField extends AbstractWidget
 {
@@ -17,6 +18,8 @@ abstract class AbstractField extends AbstractWidget
     use Field\Trait\Hint;
     use Field\Trait\Label;
 
+    private string $after = '';
+    private string $before = '';
     private bool|string $ariaDescribedBy = false;
     private string $class = '';
     private bool $container = true;
@@ -24,8 +27,41 @@ abstract class AbstractField extends AbstractWidget
     private bool $inputContainer = false;
     private array $inputContainerAttributes = [];
     private string $inputId = '';
-    private string $template = '{label}{input}{hint}{error}';
+    private string $inputTemplate = '{before}' . PHP_EOL . '{input}' . PHP_EOL . '{after}';
+    private string $template = '{label}' . PHP_EOL . '{input}' . PHP_EOL . '{hint}' . PHP_EOL . '{error}';
     private null|AbstractWidget $widget = null;
+
+
+    /**
+     * Return new instance with after input html content.
+     *
+     * @param string $after The html content to be added after the input.
+     *
+     * @return self
+     */
+    public function after(string|Stringable $value): self
+    {
+        $new = clone $this;
+        $new->after = (string) $value;
+
+        return $new;
+    }
+
+    /**
+     * Return new instance with before input html content.
+     *
+     * @param string $before The html content to be added before the input.
+     *
+     * @return self
+     */
+    public function before(string|Stringable $value): self
+    {
+        $new = clone $this;
+        $new->before = (string) $value;
+
+        return $new;
+    }
+
 
     /**
      * Return new instance with css class to add to the field.
@@ -152,6 +188,21 @@ abstract class AbstractField extends AbstractWidget
     }
 
     /**
+     * Return new instance with input template.
+     *
+     * @param string $value The input template.
+     *
+     * @return static
+     */
+    public function inputTemplate(string $value): static
+    {
+        $new = clone $this;
+        $new->inputTemplate = $value;
+
+        return $new;
+    }
+
+    /**
      * Return new instance with the template field layout.
      *
      * @param string $value The template field.
@@ -216,7 +267,7 @@ abstract class AbstractField extends AbstractWidget
             ->attributes($hintAttributes)
             ->message($this->hint)
             ->tag($this->hintTag)
-            ->render() . PHP_EOL;
+            ->render();
     }
 
     /**
@@ -227,7 +278,9 @@ abstract class AbstractField extends AbstractWidget
         $labelAttributes = $this->labelAttributes;
 
         if (!array_key_exists('for', $labelAttributes)) {
-            $labelAttributes['for'] = $widget->getInputId();
+            /** @var string */
+            $id = $widget->getAttributesValue('id') ?? $widget->getInputId();
+            $labelAttributes['for'] = $id;
         }
 
         return Field\Label::create(construct: [$widget->getFormModel(), $widget->getAttribute()])
@@ -265,27 +318,36 @@ abstract class AbstractField extends AbstractWidget
         }
 
         if ($widget instanceof FormWidgetInterface && $widget instanceof Input\Hidden === false) {
-            $hintContent = $this->renderHint($widget) . PHP_EOL;
+            $hintContent = $this->renderHint($widget);
             $hintTag = match ($this->hintContainer) {
-                true => Tag::create('div', $hintContent, $this->hintContainerAttributes) . PHP_EOL,
-                false => $hintContent . PHP_EOL,
+                true => Tag::create('div', $hintContent, $this->hintContainerAttributes),
+                false => $hintContent,
             };
         }
 
         $widgetContent = $widget->render();
 
         if ('' !== $widgetContent) {
+            $widgetContent = strtr(
+                $this->inputTemplate,
+                [
+                    '{before}' => $this->before,
+                    '{input}' => $widgetContent,
+                    '{after}' => $this->after,
+                ],
+            );
+
             $inputTag = match ($this->inputContainer) {
-                true => Tag::create('div', $widgetContent . PHP_EOL, $this->inputContainerAttributes) . PHP_EOL,
-                false => $widgetContent . PHP_EOL,
+                true => Tag::create('div', $widgetContent, $this->inputContainerAttributes),
+                false => $widgetContent,
             };
         }
 
         if ($widget instanceof FormWidgetInterface && $widget instanceof Input\Hidden === false) {
-            $labelContent = $this->renderLabel($widget) . PHP_EOL;
+            $labelContent = $this->renderLabel($widget);
 
             $labelTag = match ($this->labelContainer) {
-                true => Tag::create('div', $labelContent, $this->labelContainerAttributes) . PHP_EOL,
+                true => Tag::create('div', $labelContent, $this->labelContainerAttributes),
                 false => $labelContent,
             };
         }
@@ -296,7 +358,12 @@ abstract class AbstractField extends AbstractWidget
             trim(
                 strtr(
                     $this->template,
-                    ['{error}' => $errorTag, '{hint}' => $hintTag, '{input}' => $inputTag, '{label}' => $labelTag],
+                    [
+                        '{error}' => $errorTag,
+                        '{hint}' => $hintTag,
+                        '{input}' => $inputTag,
+                        '{label}' => $labelTag,
+                    ],
                 ),
             ),
         );
