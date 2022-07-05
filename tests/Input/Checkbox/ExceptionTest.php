@@ -15,7 +15,7 @@ final class ExceptionTest extends TestCase
     /**
      * @throws ReflectionException
      */
-    public function testValueException(): void
+    public function testValue(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Checkbox::class widget value can not be an iterable or an object.');

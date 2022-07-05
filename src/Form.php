@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Forge\Form;
 
-use Forge\Form\Input\Hidden;
-use Forge\Html\Helper\CssClass;
+use Forge\Form\Base\Attribute;
 use Forge\Html\Tag\Tag;
 use Forge\Widget\AbstractWidget;
 use InvalidArgumentException;
 use Stringable;
+use Yiisoft\Http\Method;
 
 use function explode;
 use function implode;
@@ -32,6 +32,11 @@ use function urldecode;
  */
 final class Form extends AbstractWidget
 {
+    use Attribute\Autocomplete;
+    use Attribute\Classes;
+    use Attribute\Id;
+    use Attribute\Name;
+
     private string $action = '';
     private string $csrfName = '';
     private string $csrfToken = '';
@@ -50,23 +55,31 @@ final class Form extends AbstractWidget
         $action = $this->action;
         $hiddenInputs = [];
 
-        if ($this->csrfToken !== '' && $this->method === 'post') {
-            $hiddenInputs[] = Tag::create('hidden', $this->csrfToken, ['name' => $this->csrfName]);
+        if ($this->csrfToken !== '' && $this->method === Method::POST) {
+            $hiddenInputs[] = Tag::create(
+                'input',
+                '',
+                ['name' => $this->csrfName, 'type' => 'hidden', 'value' => $this->csrfToken],
+            );
         }
 
-        if ($this->method === 'get' && ($pos = strpos($action, '?')) !== false) {
+        if ($this->method === Method::GET && ($pos = strpos($action, '?')) !== false) {
             /**
              * Query parameters in the action are ignored for GET method we use hidden fields to add them back.
              */
             foreach (explode('&', substr($action, $pos + 1)) as $pair) {
                 if (($pos1 = strpos($pair, '=')) !== false) {
                     $hiddenInputs[] = Tag::create(
-                        'hidden',
-                        urldecode(substr($pair, $pos1 + 1)),
-                        ['name' => urldecode(substr($pair, 0, $pos1))],
+                        'input',
+                        '',
+                        [
+                            'name' => urldecode(substr($pair, 0, $pos1)),
+                            'type' => 'hidden',
+                            'value' => urldecode(substr($pair, $pos1 + 1)),
+                        ],
                     );
                 } else {
-                    $hiddenInputs[] = Tag::create('hidden', '', ['name' => urldecode($pair)]);
+                    $hiddenInputs[] = Tag::create('input', '', ['name' => urldecode($pair), 'type' => 'hidden']);
                 }
             }
 
@@ -95,11 +108,12 @@ final class Form extends AbstractWidget
     }
 
     /**
-     * The accept-charset content attribute gives the character encodings that are to be used for the submission.
-     * If specified, the value must be an ordered set of unique space-separated tokens that are ASCII case-insensitive,
-     * and each token must be an ASCII case-insensitive match for one of the labels of an ASCII-compatible encoding.
+     * Returns a new instances with the accept-charset content attribute gives the character encodings that are to be
+     * used for the submission. If specified, the value must be an ordered set of unique space-separated tokens that are
+     * ASCII case-insensitive, and each token must be an ASCII case-insensitive match for one of the labels of an
+     * ASCII-compatible encoding.
      *
-     * @param string $value the accept-charset attribute value.
+     * @param string $value The accept-charset attribute value.
      *
      * @return self
      *
@@ -114,10 +128,10 @@ final class Form extends AbstractWidget
     }
 
     /**
-     * The action and form-action content attributes, if specified, must have a value that is a valid non-empty URL
-     * potentially surrounded by spaces.
+     * Returns a new instances with the action and form-action content attributes, if specified, must have a value that
+     * is a valid non-empty URL potentially surrounded by spaces.
      *
-     * @param string $value the action attribute value.
+     * @param string $value The action attribute value.
      *
      * @return self
      *
@@ -132,28 +146,10 @@ final class Form extends AbstractWidget
     }
 
     /**
-     * Specifies whether the element represents an input control for which a UA is meant to store the value entered by
-     * the user (so that the UA can prefill the form later).
+     * Returns a new instances with the CSRF-token content attribute token that are known to be safe to use for.
      *
-     * @param bool $value
-     *
-     * @return self
-     *
-     * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-autocompleteelements-autocomplete
-     */
-    public function autocomplete(bool $value = true): self
-    {
-        $new = clone $this;
-        $new->attributes['autocomplete'] = $value ? 'on' : 'off';
-
-        return $new;
-    }
-
-    /**
-     * The CSRF-token content attribute token that are known to be safe to use for.
-     *
-     * @param string|Stringable $csrfToken the CSRF-token attribute value.
-     * @param string $csrfName the CSRF-token attribute name.
+     * @param string|Stringable $csrfToken The CSRF-token attribute value.
+     * @param string $csrfName The CSRF-token attribute name.
      *
      * @return self
      */
@@ -167,24 +163,9 @@ final class Form extends AbstractWidget
     }
 
     /**
-     * Set CSS class of the field widget.
+     * Returns a new instances with the enctype content attribute specifies the content type of the form submission.
      *
-     * @param string $class
-     *
-     * @return self
-     */
-    public function class(string $class): self
-    {
-        $new = clone $this;
-        CssClass::add($new->attributes, $class);
-
-        return $new;
-    }
-
-    /**
-     * The form-enctype content attribute specifies the content type of the form submission.
-     *
-     * @param string $value the form-enctype attribute value.
+     * @param string $value The enctype attribute value.
      *
      * @return self
      *
@@ -192,33 +173,27 @@ final class Form extends AbstractWidget
      */
     public function enctype(string $value): self
     {
+        if (
+            $value !== 'multipart/form-data' &&
+            $value !== 'application/x-www-form-urlencoded' &&
+            $value !== 'text/plain'
+        ) {
+            throw new InvalidArgumentException(
+                'The formenctype attribute must be one of the following values: ' .
+                '"multipart/form-data", "application/x-www-form-urlencoded", "text/plain".'
+            );
+        }
+
         $new = clone $this;
-        $new->attributes['id'] = $value;
+        $new->attributes['enctype'] = $value;
 
         return $new;
     }
 
     /**
-     * Set the ID of the widget.
+     * Returns a new instances with the method attribute specifies how the form-data should be submitted.
      *
-     * @param string|null $id
-     *
-     * @return self
-     *
-     * @link https://html.spec.whatwg.org/multipage/dom.html#the-id-attribute
-     */
-    public function id(?string $id): self
-    {
-        $new = clone $this;
-        $new->attributes['id'] = $id;
-
-        return $new;
-    }
-
-    /**
-     * The method content attribute specifies how the form-data should be submitted.
-     *
-     * @param string $value the method attribute value.
+     * @param string $value The method attribute value.
      *
      * @return self
      *
@@ -233,7 +208,7 @@ final class Form extends AbstractWidget
     }
 
     /**
-     * The novalidate and form-novalidate content attributes are boolean attributes. If present, they indicate that the
+     * Returns a new instances with the novalidate attributes are boolean attributes. If present, they indicate that the
      * form is not to be validated during submission.
      *
      * @return self
@@ -249,10 +224,10 @@ final class Form extends AbstractWidget
     }
 
     /**
-     * The target and form-target content attributes, if specified, must have values that are valid browsing context
-     * names or keywords.
+     * Returns a new instances with the target attributes, if specified, must have values that are valid browsing
+     * context names or keywords.
      *
-     * @param string $value the target attribute value, for default its `_blank`.
+     * @param string $value The target attribute value.
      *
      * @return self
      *

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Forge\Form\Input;
 
-use Forge\Form\Base\FormWidget;
+use Forge\Form\Base\Attribute;
 use InvalidArgumentException;
 
 use function ucfirst;
@@ -15,12 +15,12 @@ use function ucfirst;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.radio.html#input.radio
  */
-final class Radio extends Base\Input
+final class Radio extends Input
 {
-    use Base\Attribute\Checked;
+    use Attribute\Checked;
 
     private null|string $label = '';
-    private FormWidget|null $hidden = null;
+    private Hidden|null $hidden = null;
 
     public function label(null|string $value): self
     {
