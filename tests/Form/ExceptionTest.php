@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace Forge\Form\Tests\Form;
 
 use Forge\Form\Form;
-use Forge\Form\Tests\Support\PropertyTypeForm;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 
-final class TextAreaTest extends TestCase
+final class ExceptionTest extends TestCase
 {
     /**
      * @throws ReflectionException

@@ -9,7 +9,7 @@ use Forge\Form\TextArea;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 
-final class TextTest extends TestCase
+final class TextAreaTest extends TestCase
 {
     /**
      * @throws ReflectionException
