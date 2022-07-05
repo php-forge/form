@@ -10,7 +10,7 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 
-final class TextAreaTest extends TestCase
+final class ExceptionTest extends TestCase
 {
     /**
      * @throws ReflectionException
