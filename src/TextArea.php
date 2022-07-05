@@ -18,6 +18,7 @@ use function is_string;
  */
 final class TextArea extends Base\FormWidget
 {
+    use Base\Attribute\AriaLabel;
     use Base\Attribute\Dirname;
     use Base\Attribute\Disabled;
     use Base\Attribute\Form;

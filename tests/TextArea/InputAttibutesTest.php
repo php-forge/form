@@ -14,6 +14,17 @@ final class InputAttibutesTest extends TestCase
     /**
      * @throws ReflectionException
      */
+    public function testAriaLabel(): void
+    {
+        $this->assertSame(
+            '<textarea id="propertytypeform-string" name="PropertyTypeForm[string]" aria-label="test.areaLabel"></textarea>',
+            TextArea::create(construct: [new PropertyTypeForm(), 'string'])->ariaLabel('test.areaLabel')->render(),
+        );
+    }
+
+    /**
+     * @throws ReflectionException
+     */
     public function testDirname(): void
     {
         $this->assertSame(
