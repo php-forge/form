@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Forge\Form;
 
-use Forge\Form\Base;
 use Forge\Html\Tag\Tag;
 use InvalidArgumentException;
 
