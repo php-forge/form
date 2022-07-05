@@ -7,6 +7,7 @@ namespace Forge\Form\Tests\Bootstrap5;
 use Forge\Form\Field;
 use Forge\Form\Input\Text;
 use Forge\Form\Tests\Support\BasicForm;
+use Forge\Form\TextArea;
 use Forge\TestUtils\Assert;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
@@ -139,6 +140,27 @@ final class InputGroupTest extends TestCase
                 ->inputContainer(true)
                 ->inputContainerClass('input-group mb-3')
                 ->inputTemplate('{before}' . PHP_EOL . '{after}' . PHP_EOL . '{input}')
+                ->label(null)
+                ->render(),
+        );
+
+        $assert->equalsWithoutLE(
+            <<<HTML
+            <div class="input-group">
+            <span class="input-group-text">With textarea</span>
+            <textarea class="form-control" id="basicform-textarea" name="BasicForm[textArea]" aria-label="With textarea"></textarea>
+            </div>
+            HTML,
+            Field::create()
+                ->widget(
+                    TextArea::create(construct: [new BasicForm(), 'textArea'])
+                        ->ariaLabel('With textarea')
+                        ->class('form-control')
+                )
+                ->before('<span class="input-group-text">With textarea</span>')
+                ->container(false)
+                ->inputContainer(true)
+                ->inputContainerClass('input-group')
                 ->label(null)
                 ->render(),
         );

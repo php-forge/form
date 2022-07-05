@@ -14,7 +14,7 @@ use function is_string;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.color.html#input.color
  */
-final class Color extends Base\Input
+final class Color extends Input
 {
     /**
      * @return string the generated input tag.

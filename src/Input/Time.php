@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Forge\Form\Input;
 
+use Forge\Form\Base\Attribute;
 use InvalidArgumentException;
 
 use function is_string;
@@ -14,11 +15,11 @@ use function is_string;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.time.html#input.time
  */
-final class Time extends Base\Input
+final class Time extends Input
 {
-    use Base\Attribute\Max;
-    use Base\Attribute\Min;
-    use Base\Attribute\Step;
+    use Attribute\Max;
+    use Attribute\Min;
+    use Attribute\Step;
 
     /**
      * @return string the generated input tag.

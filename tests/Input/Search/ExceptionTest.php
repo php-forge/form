@@ -15,7 +15,7 @@ final class ExceptionTest extends TestCase
     /**
      * @throws ReflectionException
      */
-    public function testDirnameException(): void
+    public function testDirname(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The value cannot be empty.');
@@ -25,7 +25,7 @@ final class ExceptionTest extends TestCase
     /**
      * @throws ReflectionException
      */
-    public function testValueException(): void
+    public function testValue(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Search::class widget must be a string or null value.');

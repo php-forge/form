@@ -14,7 +14,7 @@ final class ExceptionTest extends TestCase
     /**
      * @throws ReflectionException
      */
-    public function testValueException(): void
+    public function testValue(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Reset::class widget must be a string or null value.');

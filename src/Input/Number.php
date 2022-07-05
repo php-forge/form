@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Forge\Form\Input;
 
+use Forge\Form\Base\Attribute;
 use InvalidArgumentException;
 
 use function is_numeric;
@@ -14,12 +15,12 @@ use function is_numeric;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.number.html
  */
-final class Number extends Base\Input
+final class Number extends Input
 {
-    use Base\Attribute\Max;
-    use Base\Attribute\Min;
-    use Base\Attribute\Placeholder;
-    use Base\Attribute\Step;
+    use Attribute\Max;
+    use Attribute\Min;
+    use Attribute\Placeholder;
+    use Attribute\Step;
 
     /**
      * @return string the generated input tag.

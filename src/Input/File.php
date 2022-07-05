@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Forge\Form\Input;
 
-use Forge\Form\Base\FormWidget;
+use Forge\Form\Base\Attribute;
 use Forge\Html\Helper\Utils;
 use Forge\Html\Tag\Tag;
 
@@ -16,12 +16,12 @@ use function is_string;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.file.html#input.file
  */
-final class File extends Base\Input
+final class File extends Input
 {
-    use Base\Attribute\Accept;
-    use Base\Attribute\Multiple;
+    use Attribute\Accept;
+    use Attribute\Multiple;
 
-    private FormWidget|null $hidden = null;
+    private Hidden|null $hidden = null;
 
     /**
      * Returns a new instance with hidden widget that corresponds to "unchecked" state of the input.

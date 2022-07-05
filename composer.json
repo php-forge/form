@@ -16,7 +16,8 @@
         "forge/html": "^1.0@dev",
         "forge/model": "^1.0",
         "forge/test-utils": "^1.0@dev",
-        "forge/widget": "^1.0@dev"
+        "forge/widget": "^1.0@dev",
+        "yiisoft/http": "^1.2"
     },
     "require-dev": {
         "phpunit/phpunit": "*",

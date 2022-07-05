@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Forge\Form\Input;
 
-use Forge\Form\Base\Globals;
+use Forge\Form\Base;
 use Forge\Html\Tag\Tag;
 use Forge\Widget\AbstractWidget;
 use InvalidArgumentException;
@@ -21,7 +21,7 @@ final class Button extends AbstractWidget
     use Base\Attribute\Disabled;
     use Base\Attribute\Form;
     use Base\Attribute\Value;
-    use Globals;
+    use Base\Globals;
 
     /**
      * @return string the generated input tag.

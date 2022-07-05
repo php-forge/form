@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Forge\Form\Input;
 
+use Forge\Form\Base\Attribute;
 use InvalidArgumentException;
 
 use function is_string;
@@ -14,13 +15,13 @@ use function is_string;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.password.html#input.password
  */
-final class Password extends Base\Input
+final class Password extends Input
 {
-    use Base\Attribute\MaxLength;
-    use Base\Attribute\MinLength;
-    use Base\Attribute\Pattern;
-    use Base\Attribute\Placeholder;
-    use Base\Attribute\Size;
+    use Attribute\MaxLength;
+    use Attribute\MinLength;
+    use Attribute\Pattern;
+    use Attribute\Placeholder;
+    use Attribute\Size;
 
     /**
      * @return string the generated input tag.

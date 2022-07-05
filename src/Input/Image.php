@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Forge\Form\Input;
 
+use Forge\Form\Base\Attribute;
 use InvalidArgumentException;
 
 use function is_string;
@@ -15,13 +16,13 @@ use function is_string;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.image.html#input.image
  */
-final class Image extends Base\Input
+final class Image extends Input
 {
-    use Base\Attribute\Formaction;
-    use Base\Attribute\Formenctype;
-    use Base\Attribute\Formmethod;
-    use Base\Attribute\Formnovalidate;
-    use Base\Attribute\Formtarget;
+    use Attribute\Formaction;
+    use Attribute\Formenctype;
+    use Attribute\Formmethod;
+    use Attribute\Formnovalidate;
+    use Attribute\Formtarget;
 
     /**
      * Returns a new instances provides a textual label for an alternative button for users and UAs who cannot use the
