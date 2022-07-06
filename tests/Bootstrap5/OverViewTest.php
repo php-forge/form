@@ -134,6 +134,8 @@ final class OverViewTest extends TestCase
                 ->hintContainer(true)
                 ->hintContainerClass('col-auto')
                 ->hintTag('span')
+                ->inputTemplate('{input}')
+                ->template('{label}' . PHP_EOL . '{field}' . PHP_EOL . '{hint}')
                 ->render(),
         );
     }
@@ -186,7 +188,7 @@ final class OverViewTest extends TestCase
                     ->class('form-check-input')
                     ->containerClass('form-check')
                     ->labelAttributes(['class' => 'form-check-label'])
-                    ->template('{input}{label}{hint}{error}') . PHP_EOL .
+                    ->inputTemplate('{input}' . PHP_EOL . '{label}') . PHP_EOL .
                 $field->widget(Submit::create()->class('btn btn-primary'))->container(false) . PHP_EOL .
             Form::end()
         );

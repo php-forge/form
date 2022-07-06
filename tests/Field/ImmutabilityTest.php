@@ -16,6 +16,10 @@ final class ImmutabilityTest extends TestCase
     public function testImmutability(): void
     {
         $field = Field::create();
+        $this->assertNotSame($field, $field->after(''));
+        $this->assertNotSame($field, $field->afterInput(''));
+        $this->assertNotSame($field, $field->before(''));
+        $this->assertNotSame($field, $field->beforeInput(''));
         $this->assertNotSame($field, $field->containerAttributes([]));
         $this->assertNotSame($field, $field->error(''));
         $this->assertNotSame($field, $field->errorAttributes([]));

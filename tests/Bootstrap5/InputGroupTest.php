@@ -40,10 +40,10 @@ final class InputGroupTest extends TestCase
                         ->ariaLabel('Username')
                         ->placeHolder('Username')
                 )
-                ->before('<span class="input-group-text" id="basic-addon1">@</span>')
+                ->beforeInput('<span class="input-group-text" id="basic-addon1">@</span>')
                 ->containerClass('input-group mb-3')
                 ->class('form-control')
-                ->label(null)
+                ->inputTemplate('{beforeInput}' . PHP_EOL . '{input}')
                 ->render(),
         );
 
@@ -61,10 +61,10 @@ final class InputGroupTest extends TestCase
                         ->ariaLabel("Recipient's username")
                         ->placeHolder("Recipient's username")
                 )
-                ->after('<span class="input-group-text" id="basic-addon2">@example.com</span>')
+                ->afterInput('<span class="input-group-text" id="basic-addon2">@example.com</span>')
                 ->containerClass('input-group mb-3')
                 ->class('form-control')
-                ->label(null)
+                ->inputTemplate('{input}' . PHP_EOL . '{afterInput}')
                 ->render(),
         );
 
@@ -82,13 +82,15 @@ final class InputGroupTest extends TestCase
                         ->ariaDescribedBy('basic-addon3')
                         ->id('basic-url')
                 )
-                ->before('<span class="input-group-text" id="basic-addon3">https://example.com/users/</span>')
+                ->beforeInput('<span class="input-group-text" id="basic-addon3">https://example.com/users/</span>')
                 ->container(false)
                 ->inputContainer(true)
                 ->inputContainerClass('input-group mb-3')
                 ->class('form-control')
                 ->label('Your vanity URL')
                 ->labelClass('form-label')
+                ->inputTemplate('{beforeInput}' . PHP_EOL . '{input}')
+                ->template('{label}' . PHP_EOL . '{field}')
                 ->render(),
         );
 
@@ -104,11 +106,12 @@ final class InputGroupTest extends TestCase
                 ->widget(
                     Text::create(construct: [new BasicForm(), 'amount'])->ariaLabel('Amount (to the nearest dollar)')
                 )
-                ->after('<span class="input-group-text">.00</span>')
-                ->before('<span class="input-group-text">$</span>')
+                ->afterInput('<span class="input-group-text">.00</span>')
+                ->beforeInput('<span class="input-group-text">$</span>')
                 ->container(false)
                 ->inputContainer(true)
                 ->inputContainerClass('input-group mb-3')
+                ->inputTemplate('{beforeInput}' . PHP_EOL . '{input}' . PHP_EOL . '{afterInput}')
                 ->class('form-control')
                 ->label(null)
                 ->render(),
@@ -129,8 +132,8 @@ final class InputGroupTest extends TestCase
                         ->class('form-control')
                         ->placeHolder('Server')
                 )
-                ->after('<span class="input-group-text">@</span>')
-                ->before(
+                ->afterInput('<span class="input-group-text">@</span>')
+                ->beforeInput(
                     Text::create(construct: [new BasicForm(), 'username'])
                         ->ariaLabel('Username')
                         ->class('form-control')
@@ -139,7 +142,7 @@ final class InputGroupTest extends TestCase
                 ->container(false)
                 ->inputContainer(true)
                 ->inputContainerClass('input-group mb-3')
-                ->inputTemplate('{before}' . PHP_EOL . '{after}' . PHP_EOL . '{input}')
+                ->inputTemplate('{beforeInput}' . PHP_EOL . '{afterInput}' . PHP_EOL . '{input}')
                 ->label(null)
                 ->render(),
         );
@@ -157,10 +160,11 @@ final class InputGroupTest extends TestCase
                         ->ariaLabel('With textarea')
                         ->class('form-control')
                 )
-                ->before('<span class="input-group-text">With textarea</span>')
+                ->beforeInput('<span class="input-group-text">With textarea</span>')
                 ->container(false)
                 ->inputContainer(true)
                 ->inputContainerClass('input-group')
+                ->inputTemplate('{beforeInput}' . PHP_EOL . '{input}')
                 ->label(null)
                 ->render(),
         );

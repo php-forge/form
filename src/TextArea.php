@@ -98,7 +98,7 @@ final class TextArea extends Base\FormWidget
         $attributes = $this->attributes;
         $content = match (array_key_exists('value', $attributes)) {
             true => $attributes['value'],
-            false => $this->getValue() === '' ? '' : $this->getValue(),
+            false => $this->getValue(),
         };
 
         unset($attributes['value']);
