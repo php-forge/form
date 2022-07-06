@@ -13,6 +13,39 @@ use ReflectionException;
 
 final class FieldTest extends TestCase
 {
+    /**
+     * @throws ReflectionException
+     */
+    public function testAfterField(): void
+    {
+        $assert = new Assert();
+
+        $assert->equalsWithoutLE(
+            <<<HTML
+            <div class="form-group input-group me-3">
+            <div class="form-floating flex-grow-1">
+            <input class="form-control" id="basicform-username" name="BasicForm[username]" type="text" placeholder="Name">
+            <label for="basicform-username">Name</label>
+            </div>
+            <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+            </div>
+            HTML,
+            Field::create()
+                ->widget(Text::create(construct: [new BasicForm(), 'username'])->placeholder('Name'))
+                ->after('<span class="input-group-text"><i class="bi bi-person-fill"></i></span>')
+                ->class('form-control')
+                ->containerClass('form-group input-group me-3')
+                ->inputContainer(true)
+                ->inputContainerClass('form-floating flex-grow-1')
+                ->inputTemplate('{input}' . PHP_EOL . '{label}')
+                ->label('Name')
+                ->render(),
+        );
+    }
+
+    /**
+     * @throws ReflectionException
+     */
     public function testBeforeField(): void
     {
         $assert = new Assert();

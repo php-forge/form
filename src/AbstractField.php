@@ -419,7 +419,7 @@ abstract class AbstractField extends AbstractWidget
         }
 
         if ('' !== $this->after) {
-            $inputTag .= $this->after . PHP_EOL;
+            $inputTag .= PHP_EOL . $this->after . PHP_EOL;
         }
 
         return $inputTag;
