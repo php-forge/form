@@ -20,6 +20,7 @@ final class Button extends AbstractWidget
 {
     use Base\Attribute\Disabled;
     use Base\Attribute\Form;
+    use Base\Attribute\Type;
     use Base\Attribute\Value;
     use Base\Globals;
 
@@ -38,7 +39,10 @@ final class Button extends AbstractWidget
             throw new InvalidArgumentException($this->getShortNameClass() . ' widget must be a string or null value.');
         }
 
-        $attributes['type'] = 'button';
+        if (!array_key_exists('type', $attributes)) {
+            $attributes['type'] = 'button';
+        }
+
         $attributes['value'] = $value;
 
         return Tag::create('input', '', $attributes);
