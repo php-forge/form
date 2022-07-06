@@ -19,7 +19,9 @@ abstract class AbstractField extends AbstractWidget
     use Field\Trait\Label;
 
     private string $after = '';
+    private string $afterInput = '';
     private string $before = '';
+    private string $beforeInput = '';
     private bool|string $ariaDescribedBy = false;
     private string $class = '';
     private bool $container = true;
@@ -27,9 +29,24 @@ abstract class AbstractField extends AbstractWidget
     private bool $inputContainer = false;
     private array $inputContainerAttributes = [];
     private string $inputId = '';
-    private string $inputTemplate = '{before}' . PHP_EOL . '{input}' . PHP_EOL . '{after}';
-    private string $template = '{label}' . PHP_EOL . '{input}' . PHP_EOL . '{hint}' . PHP_EOL . '{error}';
+    private string $inputTemplate = '{label}' . PHP_EOL . '{input}';
+    private string $template = '{field}' . PHP_EOL . '{hint}' . PHP_EOL . '{error}';
     private null|AbstractWidget $widget = null;
+
+    /**
+     * Return new instance with after field html content.
+     *
+     * @param string $after The html content to be added after the field.
+     *
+     * @return self
+     */
+    public function after(string $after): self
+    {
+        $new = clone $this;
+        $new->after = $after;
+
+        return $new;
+    }
 
     /**
      * Return new instance with after input html content.
@@ -38,10 +55,25 @@ abstract class AbstractField extends AbstractWidget
      *
      * @return self
      */
-    public function after(string|Stringable $value): self
+    public function afterInput(string|Stringable $value): self
     {
         $new = clone $this;
-        $new->after = (string) $value;
+        $new->afterInput = (string) $value;
+
+        return $new;
+    }
+
+    /**
+     * Return new instance with before field html content.
+     *
+     * @param string $after The html content to be added before field.
+     *
+     * @return self
+     */
+    public function before(string $after): self
+    {
+        $new = clone $this;
+        $new->before = $after;
 
         return $new;
     }
@@ -53,10 +85,10 @@ abstract class AbstractField extends AbstractWidget
      *
      * @return self
      */
-    public function before(string|Stringable $value): self
+    public function beforeInput(string|Stringable $value): self
     {
         $new = clone $this;
-        $new->before = (string) $value;
+        $new->beforeInput = (string) $value;
 
         return $new;
     }
@@ -119,6 +151,16 @@ abstract class AbstractField extends AbstractWidget
         CssClass::add($new->containerAttributes, $value);
 
         return $new;
+    }
+
+    public function getAfter(): string
+    {
+        return $this->after;
+    }
+
+    public function getBefore(): string
+    {
+        return $this->before;
     }
 
     public function getContainer(): bool
@@ -294,7 +336,6 @@ abstract class AbstractField extends AbstractWidget
     {
         $errorTag = '';
         $hintTag = '';
-        $inputTag = '';
         $labelTag = '';
 
         $widget = $this->getWidget();
@@ -323,24 +364,6 @@ abstract class AbstractField extends AbstractWidget
             };
         }
 
-        $widgetContent = $widget->render();
-
-        if ('' !== $widgetContent) {
-            $widgetContent = strtr(
-                $this->inputTemplate,
-                [
-                    '{before}' => $this->before,
-                    '{input}' => $widgetContent,
-                    '{after}' => $this->after,
-                ],
-            );
-
-            $inputTag = match ($this->inputContainer) {
-                true => Tag::create('div', $widgetContent, $this->inputContainerAttributes),
-                false => $widgetContent,
-            };
-        }
-
         if ($widget instanceof FormWidgetInterface && $widget instanceof Input\Hidden === false) {
             $labelContent = $this->renderLabel($widget);
 
@@ -350,6 +373,8 @@ abstract class AbstractField extends AbstractWidget
             };
         }
 
+        $fieldTag = $this->renderField($labelTag, $widget);
+
         return preg_replace(
             '/^\h*\v+/m',
             '',
@@ -358,12 +383,45 @@ abstract class AbstractField extends AbstractWidget
                     $this->template,
                     [
                         '{error}' => $errorTag,
+                        '{field}' => $fieldTag,
                         '{hint}' => $hintTag,
-                        '{input}' => $inputTag,
                         '{label}' => $labelTag,
                     ],
                 ),
             ),
         );
+    }
+
+    private function renderField(string $labelTag, AbstractWidget $widget): string
+    {
+        $inputTag = '';
+        $widgetContent = $widget->render();
+
+        if ('' !== $this->before) {
+            $inputTag .= $this->before . PHP_EOL;
+        }
+
+        if ('' !== $widgetContent) {
+            $widgetContent = strtr(
+                $this->inputTemplate,
+                [
+                    '{beforeInput}' => $this->beforeInput,
+                    '{label}' => $labelTag,
+                    '{input}' => $widgetContent,
+                    '{afterInput}' => $this->afterInput,
+                ],
+            );
+
+            $inputTag .= match ($this->inputContainer) {
+                true => Tag::create('div', $widgetContent, $this->inputContainerAttributes),
+                false => $widgetContent,
+            };
+        }
+
+        if ('' !== $this->after) {
+            $inputTag .= $this->after . PHP_EOL;
+        }
+
+        return $inputTag;
     }
 }
