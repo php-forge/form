@@ -112,7 +112,7 @@ final class ButtonGroupTest extends TestCase
             ButtonGroup::create()
                 ->buttons([
                     Button::create()->type('submit')->value('Send'),
-                    Button::create()->type('reset')->value('Reset')
+                    Button::create()->type('reset')->value('Reset'),
                 ])
                 ->render(),
         );
