@@ -14,7 +14,7 @@
     "require": {
         "php": "^8.0",
         "forge/html": "^1.0@dev",
-        "forge/model": "^1.0",
+        "forge/model": "^1.0@dev",
         "forge/test-utils": "^1.0@dev",
         "forge/widget": "^1.0@dev",
         "yiisoft/http": "^1.2"
@@ -36,7 +36,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0.x-dev"
+            "dev-main": "1.0.x-dev"
         }
     },
     "config": {
