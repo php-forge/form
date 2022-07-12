@@ -115,6 +115,7 @@ final class FormTest extends TestCase
      */
     public function testEnd(): void
     {
+        Form::create()->begin();
         $this->assertSame('</form>', Form::end());
     }
 
