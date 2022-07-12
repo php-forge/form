@@ -16,7 +16,7 @@ use function is_numeric;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.number.html
  */
-final class Number extends Input implements PlaceHolderInterface
+final class Number extends Input implements PlaceholderInterface
 {
     use Attribute\Max;
     use Attribute\Min;

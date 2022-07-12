@@ -16,7 +16,7 @@ use function is_string;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.password.html#input.password
  */
-final class Password extends Input implements PlaceHolderInterface
+final class Password extends Input implements PlaceholderInterface
 {
     use Attribute\MaxLength;
     use Attribute\MinLength;

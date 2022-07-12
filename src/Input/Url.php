@@ -16,7 +16,7 @@ use function is_string;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.url.html
  */
-final class Url extends Input implements PlaceHolderInterface
+final class Url extends Input implements PlaceholderInterface
 {
     use Attribute\MaxLength;
     use Attribute\MinLength;

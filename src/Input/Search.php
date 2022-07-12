@@ -16,7 +16,7 @@ use function is_string;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.search.html#input.search
  */
-final class Search extends Input implements PlaceHolderInterface
+final class Search extends Input implements PlaceholderInterface
 {
     use Attribute\Dirname;
     use Attribute\MaxLength;
