@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Forge\Form\Input;
 
 use Forge\Form\Base\Attribute;
-use Forge\Form\Base\PlaceholderInterface;
 use InvalidArgumentException;
 
 use function is_string;
@@ -16,7 +15,7 @@ use function is_string;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.email.html#input.email
  */
-final class Email extends Input implements PlaceholderInterface
+final class Email extends Input
 {
     use Attribute\MaxLength;
     use Attribute\MinLength;

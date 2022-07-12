@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Forge\Form\Input;
 
 use Forge\Form\Base\Attribute;
-use Forge\Form\Base\PlaceholderInterface;
 use InvalidArgumentException;
 
 use function is_numeric;
@@ -16,7 +15,7 @@ use function is_numeric;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.number.html
  */
-final class Number extends Input implements PlaceholderInterface
+final class Number extends Input
 {
     use Attribute\Max;
     use Attribute\Min;

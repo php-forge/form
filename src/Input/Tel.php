@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Forge\Form\Input;
 
 use Forge\Form\Base\Attribute;
-use Forge\Form\Base\PlaceholderInterface;
 use InvalidArgumentException;
 
 use function is_int;
@@ -17,7 +16,7 @@ use function is_string;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.tel.html#input.tel
  */
-final class Tel extends Input implements PlaceholderInterface
+final class Tel extends Input
 {
     use Attribute\MaxLength;
     use Attribute\MinLength;
