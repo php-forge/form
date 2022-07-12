@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Forge\Form\Input;
 
 use Forge\Form\Base\Attribute;
+use Forge\Form\Base\PlaceholderInterface;
 use InvalidArgumentException;
 
 use function is_string;
@@ -15,7 +16,7 @@ use function is_string;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.text.html#input.text
  */
-final class Text extends Input
+final class Text extends Input implements PlaceHolderInterface
 {
     use Attribute\Dirname;
     use Attribute\MaxLength;
@@ -43,6 +44,11 @@ final class Text extends Input
         }
 
         $attributes['value'] = $value;
+        $placeHolder = $this->getPlaceHolder();
+
+        if (!array_key_exists('placeholder', $attributes) && '' !== $placeHolder) {
+            $attributes['placeholder'] = $placeHolder;
+        }
 
         return $this->input('text', $attributes);
     }
