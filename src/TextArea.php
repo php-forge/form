@@ -116,6 +116,12 @@ final class TextArea extends Base\FormWidget
             $attributes['name'] = $this->getInputName();
         }
 
+        $placeHolder = $this->getPlaceHolder();
+
+        if (!array_key_exists('placeholder', $attributes) && '' !== $placeHolder) {
+            $attributes['placeholder'] = $placeHolder;
+        }
+
         return Tag::create('textarea', (string) $content, $attributes);
     }
 }
