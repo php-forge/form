@@ -6,7 +6,6 @@ namespace Forge\Form\Tests\Select;
 
 use Forge\Form\Select;
 use Forge\Form\Tests\Support\PropertyTypeForm;
-use Forge\TestUtils\Assert;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;

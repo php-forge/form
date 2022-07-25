@@ -24,9 +24,9 @@ final class Select extends Base\FormWidget
     use Attribute\Disabled;
     use Attribute\Form;
     use Attribute\Multiple;
+    use Attribute\Required;
     use Attribute\Size;
     use Attribute\Value;
-    use Attribute\Required;
 
     private array $groups = [];
     private array $items = [];
